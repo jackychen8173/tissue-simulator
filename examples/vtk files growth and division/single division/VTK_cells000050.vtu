@@ -1,0 +1,89 @@
+<VTKFile type="UnstructuredGrid" version="0.1">
+<UnstructuredGrid>
+<Piece  NumberOfPoints="      33" NumberOfCells="       7">
+<Points>
+<DataArray type="Float64" NumberOfComponents="3" format="ascii">
+-0.432098 0.0132752 0.0
+-0.482951 0.00738929 0.0
+-0.441173 -0.905871 0.0
+0.0408159 -0.89042 0.0
+0.00257363 0.0129269 0.0
+0.0949856 -0.88716 0.0
+0.548438 -0.92453 0.0
+0.582272 0.0396057 0.0
+0.133929 0.0878515 0.0
+0.0567434 0.0161872 0.0
+-0.428384 0.113205 0.0
+0.00628695 0.112856 0.0
+0.0834724 0.184521 0.0
+0.0461275 0.995549 0.0
+-0.429137 1.02017 0.0
+0.125898 0.997035 0.0
+0.163243 0.186006 0.0
+0.611586 0.13776 0.0
+1.0989 0.121074 0.0
+1.03994 1.00716 0.0
+0.601705 -0.926934 0.0
+1.06307 -0.884047 0.0
+1.12285 0.0205154 0.0
+0.635539 0.0372014 0.0
+-0.532442 0.106193 0.0
+-0.481589 0.112079 0.0
+-0.482342 1.01905 0.0
+-0.920946 0.995242 0.0
+-0.980178 0.100555 0.0
+-0.534235 0.00705172 0.0
+-0.981971 0.00141399 0.0
+-0.928941 -0.892847 0.0
+-0.492457 -0.906209 0.0
+</DataArray>
+</Points>
+<Cells>
+<DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 2 3 4 
+5 6 7 8 9 
+10 11 12 13 14 
+15 16 17 18 19 
+20 21 22 23 
+24 25 26 27 28 
+29 30 31 32 
+</DataArray>
+<DataArray type="Int32" Name="offsets" format="ascii">
+5 10 15 20 24 29 33 
+</DataArray>
+<DataArray type="UInt8" Name="types" format="ascii">
+7 7 7 7 7 7 7 
+</DataArray>
+</Cells>
+<CellData Scalars="cell variable 4" Vectors="cell vector">
+<DataArray type="Float64" NumberOfComponents="3" Name="cell vector" format="ascii">
+0 1 1
+0 1 1
+0 1 1
+0 1 1
+0 1 1
+0 1 1
+0 1 1
+</DataArray>
+<DataArray type="Float64" Name="cell vector length" format="ascii">
+0.129303 0.131868 0.124818 0.237867 0.130265 0.125054 0.120824 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 4" format="ascii">
+0 0 0 0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 5" format="ascii">
+0 0 0 0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 6" format="ascii">
+0 0 0 0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 7" format="ascii">
+0 0 0 0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 8" format="ascii">
+0 0 0 0 0 0 0 
+</DataArray>
+</CellData>
+</Piece>
+</UnstructuredGrid>
+</VTKFile>

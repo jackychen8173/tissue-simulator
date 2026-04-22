@@ -1,0 +1,60 @@
+<VTKFile type="UnstructuredGrid" version="0.1">
+<UnstructuredGrid>
+<Piece  NumberOfPoints="      28" NumberOfCells="      18">
+<Points>
+<DataArray type="Float64" NumberOfComponents="3" format="ascii">
+-0.882108 -0.879285 0 
+0.877351 -0.873229 0 
+-0.876831 0.855522 0 
+0.88227 0.861576 0 
+-0.0019278 -0.873925 0 
+0.00234176 0.853771 0 
+-0.0330922 -0.0012786 0 
+-0.938897 -0.0122162 0 
+0.0313303 0.0689759 0 
+0.939563 9.01818e-05 0 
+-0.0481006 -0.83049 0.0
+-0.0761485 -0.0451078 0.0
+-0.891372 -0.0549516 0.0
+-0.840262 -0.835314 0.0
+0.0722238 0.0209354 0.0
+0.0142435 -0.0422936 0.0
+0.0422915 -0.827676 0.0
+0.833642 -0.827049 0.0
+0.889633 -0.0410617 0.0
+-0.0745333 0.0406557 0.0
+-0.016553 0.103885 0.0
+-0.0426427 0.8102 0.0
+-0.833898 0.811776 0.0
+-0.889757 0.0308118 0.0
+0.0491916 0.812794 0.0
+0.0752813 0.106479 0.0
+0.892691 0.0444814 0.0
+0.841127 0.819818 0.0
+</DataArray>
+</Points>
+<Cells>
+<DataArray type="Int32" Name="connectivity" format="ascii">
+4 6 11 10 6 7 12 11 7 0 13 12 0 4 10 13 8 6 15 14 6 4 16 15 4 1 17 16 1 9 18 17 9 8 14 18 6 8 20 19 8 5 21 20 5 2 22 21 2 7 23 22 7 6 19 23 5 8 25 24 8 9 26 25 9 3 27 26 3 5 24 27 
+</DataArray>
+<DataArray type="Int32" Name="offsets" format="ascii">
+4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 
+</DataArray>
+<DataArray type="UInt8" Name="types" format="ascii">
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+</DataArray>
+</Cells>
+<CellData Scalars="wall variable 0">
+<DataArray type="Float64" Name="wall length" format="ascii">
+0.784822 0.819477 0.781608 0.788445 0.0826324 0.784822 0.785911 0.78585 0.82378 0.0826324 0.706233 0.785869 0.78287 0.819477 0.706233 0.82378 0.778654 0.788317 
+</DataArray>
+<DataArray type="Float64" Name="wall variable 0" format="ascii">
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="wall variable 1" format="ascii">
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+</DataArray>
+</CellData>
+</Piece>
+</UnstructuredGrid>
+</VTKFile>

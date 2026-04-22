@@ -1,0 +1,68 @@
+<VTKFile type="UnstructuredGrid" version="0.1">
+<UnstructuredGrid>
+<Piece  NumberOfPoints="      18" NumberOfCells="       4">
+<Points>
+<DataArray type="Float64" NumberOfComponents="3" format="ascii">
+-0.0460155 -0.806969 0.0
+-0.0731826 -0.0435736 0.0
+-0.866016 -0.0530805 0.0
+-0.814955 -0.81145 0.0
+0.0696002 0.0205242 0.0
+0.0145837 -0.040902 0.0
+0.0417508 -0.804297 0.0
+0.8094 -0.804309 0.0
+0.864407 -0.0409031 0.0
+-0.0717075 0.0397629 0.0
+-0.0166909 0.101189 0.0
+-0.0421381 0.787792 0.0
+-0.809712 0.789364 0.0
+-0.864541 0.030256 0.0
+0.0470369 0.790252 0.0
+0.0724841 0.103649 0.0
+0.867291 0.0422218 0.0
+0.815779 0.796285 0.0
+</DataArray>
+</Points>
+<Cells>
+<DataArray type="Int32" Name="connectivity" format="ascii">
+0 1 2 3 
+4 5 6 7 8 
+9 10 11 12 13 
+14 15 16 17 
+</DataArray>
+<DataArray type="Int32" Name="offsets" format="ascii">
+4 9 14 18 
+</DataArray>
+<DataArray type="UInt8" Name="types" format="ascii">
+7 7 7 7 
+</DataArray>
+</Cells>
+<CellData Scalars="cell variable 4" Vectors="cell vector">
+<DataArray type="Float64" NumberOfComponents="3" Name="cell vector" format="ascii">
+0 1 1
+0 1 1
+0 1 1
+0 1 1
+</DataArray>
+<DataArray type="Float64" Name="cell vector length" format="ascii">
+0.250128 0.262133 0.249872 0.237867 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 4" format="ascii">
+0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 5" format="ascii">
+0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 6" format="ascii">
+0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 7" format="ascii">
+0 0 0 0 
+</DataArray>
+<DataArray type="Float64" Name="cell variable 8" format="ascii">
+0 0 0 0 
+</DataArray>
+</CellData>
+</Piece>
+</UnstructuredGrid>
+</VTKFile>

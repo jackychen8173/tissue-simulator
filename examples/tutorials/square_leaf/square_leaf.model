@@ -1,0 +1,63 @@
+10
+0
+0
+
+MoveVertexRadially
+2 0
+0.001
+1
+
+WallGrowth::Stress
+4 2 1 1
+0.005
+0.0
+1
+1
+0
+3
+
+WallMechanics::Spring
+2 1 1
+0.01
+1.0
+0
+
+CenterCOM 0 0
+
+Creation::Zero
+1 1 1
+0.02
+0
+
+Degradation::One
+1 1 1
+0.05
+0
+
+DiffusionActiveTransportCell
+2 2 1 1
+0.1
+2.0
+0
+1
+
+Creation::One
+1 2 1 1
+0.05
+1
+0
+
+Degradation::One
+1 1 1
+0.02
+1
+
+MembraneCycling::CellUpTheGradientNonLinear
+4 2 2 1
+0.1
+0.05
+1.0
+2.0
+0
+1
+1

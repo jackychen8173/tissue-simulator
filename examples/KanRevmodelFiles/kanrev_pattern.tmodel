@@ -1,0 +1,49 @@
+# Model for setting up a central zone REV domain and a peripheral zone KAN domain
+# used in
+#
+# 'Control of plant organogenesis by adaxial-abaxial boundaries'
+#
+# In this file, model reactions and parameter values are defined. See documentation
+# for model file format.
+#
+# Contact: Henrik Jonsson (henrik.jonsson@sclu.cam.ac.uk)
+# 
+# Cell indices used to describe different molecules in this model
+# REV (4)   KAN (5) 
+#
+
+4            # number of reactions in model
+0	     # number of division rules in the model
+0	     # number of cell vector rules in the model
+
+#-------- List of reactions ----#
+
+CreationSpatialSphere 4 1 1 # creation of KAN outside a sphere
+# parameter values
+1.0	     # V_K, maximum KAN production rate
+25	     # K_K, radial production threshold
+20	     # n_K, Hill coefficient
+-1	     # SIGN_K, negative value implies production outside of sphere
+# molecule indices
+4 	     # KAN
+
+DegradationOne 1 1 1 # degradation of KAN in all cells
+# parameter values
+1.0	     # d_K, KAN degradation rate
+# molecule indices
+4	     # KAN
+
+CreationSpatialSphere 4 1 1  # creation of REV inside a sphere
+# parameter values
+1.0	     # V_R, maximum REV production rate
+30.0	     # K_R, radial production threshold
+20	     # n_R, Hill coefficient
+1	     # SIGN_R, positive value implies production inside of sphere
+# molecule indices
+5	     # REV
+
+DegradationOne 1 1 1 # degradation of REV in all cells
+# parameter values
+1.0	     # d_R, REV degradation rate
+# molecule indices
+5 	     # REV

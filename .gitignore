@@ -1,0 +1,36 @@
+*sublime*
+
+.vscode/
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.o
+bin/*
+
+# Some standard (e.g. Documentation) directories
+doc/html/*
+doc/latex/*
+results/*
+vtk
+*.bak
+
+# Editor files
+*.swp
+src/tags
+*~
+
+# Mac OS X
+.DS_Store
+*DS_Store*
+
+# Temporary and output files
+*.data
+*.tdata
+*.init
+*.tinit
+*.tmp
+.vscode/settings.json
+*.info
+*.gcno

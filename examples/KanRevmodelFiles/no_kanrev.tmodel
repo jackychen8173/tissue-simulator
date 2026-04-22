@@ -1,0 +1,40 @@
+# Auxin PIN1 dynamical model without KAN-REV interactions used in
+#
+# 'Control of plant organogenesis by adaxial-abaxial boundaries'
+#
+# Author: Andre Larsson
+# Contact: Henrik Jonsson (henrik.jonsson@slcu.cam.ac.uk)
+#
+# Cell indices used in model:
+# REV (4)   KAN (5) 
+# auxin (9) PIN (10)
+# X (11) M (12)
+
+2 # number of model reactions
+0 # number of division/removal rules defined in the model (not used)
+0 # number of directions defined in the model (not used) 
+
+# Auxin - PIN1 dynamics
+AuxinModel1S 13 2 4 1
+0     # cell-specific auxin production (not used)
+0.001 # c_A
+0.001 # d_A
+0.9 # k_p fraction polarized (vs symmetric) membrane PIN1
+0.3 1.3 0.002 # f_p T D
+0.001 0.001 # c_P d_P
+0.0 # X production (defined below)
+1.0 # d_X
+0.0 0.0 # cell specific marker (not used)
+9 10 11 12 #indices for cell variables: auxin PIN1 X M
+3 # wall/membrane index for PIN1
+
+# X production
+Hill 7 3 1 1 2 # auxin activate, dummy variables repress X (instead of KAN/REV)
+10 # V_X
+10 1 # K_XA, n_XA for auxin activation
+0.1 2 # K_XR, n_XR for REV repression
+0.1 2 # K_XK, n_XK for KAN repression
+11 # X index
+9 # auxin index
+6 # =zero (replaces REV)
+6 # =zero (replaces KAN)

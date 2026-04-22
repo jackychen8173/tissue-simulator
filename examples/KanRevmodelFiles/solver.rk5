@@ -1,0 +1,13 @@
+# Organism solver file, specifying type of numerical solver
+# and simulation time, used for
+#
+# 'Control of plant organogenesis by adaxial-abaxial boundaries'
+#
+# Author: Andre Larsson
+# Contact: Henrik Jonsson (henrik.jonsson@slcu.cam.ac.uk)
+#
+
+RK5Adaptive   # solver type
+0 50000      # start time, end time
+2 100	      # output format, number of data points
+0.05 1e-5     # max step, error tolerance
