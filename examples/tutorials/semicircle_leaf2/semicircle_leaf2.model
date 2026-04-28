@@ -9,11 +9,11 @@ WallMechanics::Spring
 CenterCOM 0 0
 Creation::Zero
 1 1 1
-0.005
+0.01
 4
 Degradation::One
 1 1 1
-0.005
+0.001
 4
 DiffusionActiveTransportCell
 2 2 1 1

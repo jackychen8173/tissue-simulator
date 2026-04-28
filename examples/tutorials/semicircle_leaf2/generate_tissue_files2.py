@@ -82,7 +82,7 @@ def createSemicircle(nRings, nCols, outputName, numCellVariables,
 
 createSemicircle(
     nRings=4, nCols=14,
-    outputName="semicircle_leaf.init",
+    outputName="semicircle_leaf2.init",
     numCellVariables=5,
     cellsMean=[0.0]*5,
     cellsSpread=[0.0]*5,
@@ -104,11 +104,11 @@ WallMechanics::Spring
 CenterCOM 0 0
 Creation::Zero
 1 1 1
-0.005
+0.01
 4
 Degradation::One
 1 1 1
-0.005
+0.001
 4
 DiffusionActiveTransportCell
 2 2 1 1
@@ -136,9 +136,9 @@ MembraneCycling::CellUpTheGradientNonLinear
 1
 """
 
-with open("semicircle_leaf.model", "w") as f:
+with open("semicircle_leaf2.model", "w") as f:
     f.write(model)
-print("Written semicircle_leaf.model")
+print("Written semicircle_leaf2.model")
 
 
 solver = """\
@@ -148,6 +148,6 @@ RK5Adaptive
 0.05 1e-5
 """
 
-with open("semicircle_leaf.solver", "w") as f:
+with open("semicircle_leaf2.solver", "w") as f:
     f.write(solver)
-print("Written semicircle_leaf.solver")
+print("Written semicircle_leaf2.solver")
