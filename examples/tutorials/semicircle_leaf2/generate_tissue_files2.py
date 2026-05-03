@@ -9,9 +9,15 @@ def createSemicircle(nRings, nCols, outputName, numCellVariables,
     angles = [i * math.pi / nCols for i in range(nCols + 1)]
 
     verts = []
+    # This replaces the flat x = -R_max to R_max loop
     for i in range(nCols + 1):
-        x = -R_max + i * (2 * R_max / nCols)
-        verts.append((x, 0.0))
+        a = angles[i]
+        # Calculate the starting inner radius (r=0 would be 50.0). 
+        # Using a very small radius for the origin avoids distortion.
+        r_inner = radii[0] * 0.1  
+        verts.append((-r_inner * math.cos(a), -r_inner * math.sin(a)))
+
+    # 2. Create the rest of the rings 
     for r in range(nRings):
         R = radii[r]
         for i in range(nCols + 1):
