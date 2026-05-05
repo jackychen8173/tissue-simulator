@@ -1,8 +1,11 @@
+import subprocess
+import os
+import shutil
 import math
 import random
 
 def createSemicircle(nRings, nCols, outputName, numCellVariables,
-    cellsMean, cellsSpread, numWallVariables, wallsMean, wallsSpread):
+    cellsMean, cellsSpread, numWallVariables, wallsMean, wallsSpread, auxin_apex=50.0):
 
     R_max = 200.0
     radii = [R_max * (r+1) / nRings for r in range(nRings)]
@@ -76,30 +79,42 @@ def createSemicircle(nRings, nCols, outputName, numCellVariables,
         apex_cols = set(range(nCols//2 - 1, nCols//2 + 1))
         for r in range(nRings):
             for c in range(nCols):
-                if r == nRings-1 and c in apex_cols:
-                    auxin = 10.0
-                else:
-                    auxin = 0.0
-                pin_cyto = 0.1
-                f.write(f"1 0 1 0.9 {auxin} {pin_cyto} 0.0 0.0 0.0\n")
+                auxin = auxin_apex if (r == nRings-1 and c in apex_cols) else 0.0
+                f.write(f"1 0 1 0.9 {auxin} 0.1 0.0 0.0 0.0\n")
 
     print(f"Written {outputName}: {nCells} cells, {nWalls} walls, {nVerts} vertices")
 
 
-createSemicircle(
-    nRings=4, nCols=14,
-    outputName="semicircle_leaf.init",
-    numCellVariables=5,
-    cellsMean=[0.0]*5,
-    cellsSpread=[0.0]*5,
-    numWallVariables=2,
-    wallsMean=[0.0, 0.0],
-    wallsSpread=[0.0, 0.0]
-)
+# Parameter combinations to test
+experiments = [
+    {"name": "low_transport",  "c_A": 0.05, "d_A": 0.001, "T": 0.5, "D": 0.002, "kU": 0.3},
+    {"name": "med_transport",  "c_A": 0.05, "d_A": 0.001, "T": 1.3, "D": 0.002, "kU": 0.3},
+    {"name": "high_transport", "c_A": 0.05, "d_A": 0.001, "T": 6.0, "D": 0.002, "kU": 0.3},
+    {"name": "paper_values",   "c_A": 0.03, "d_A": 0.05,  "T": 6.0, "D": 0.002, "kU": 4e-3},
+]
 
+SIMULATOR = "/mnt/c/Users/jchen/tissue-simulator/bin/simulator"
+BASE_DIR = "/mnt/c/Users/jchen/tissue-simulator/examples/tutorials/semicircle_leaf2"
 
-model = """\
-3
+for exp in experiments:
+    print(f"\nRunning experiment: {exp['name']}")
+
+    # Generate init file
+    createSemicircle(
+        nRings=4, nCols=14,
+        outputName=f"{BASE_DIR}/semicircle_leaf2.init",
+        numCellVariables=5,
+        cellsMean=[0.0]*5,
+        cellsSpread=[0.0]*5,
+        numWallVariables=2,
+        wallsMean=[0.0, 0.0],
+        wallsSpread=[0.0, 0.0],
+        auxin_apex=50.0
+    )
+
+    # Generate model file
+    model = f"""\
+7
 0
 0
 WallMechanics::Spring
@@ -108,33 +123,68 @@ WallMechanics::Spring
 1.0
 0
 CenterCOM 0 0
-AuxinModel1S
-13 2 4 1
-0
+Creation::Zero
+1 1 1
+{exp['c_A']}
+4
+Degradation::One
+1 1 1
+{exp['d_A']}
+4
+DiffusionActiveTransportCell
+2 2 1 1
+{exp['D']}
+{exp['T']}
+4
+1
+Creation::One
+1 2 1 1
 0.005
-0.001
-0.9
-0.3 1.3 0.002
-0.005 0.005
-0.0
+5
+4
+Degradation::One
+1 1 1
+0.005
+5
+MembraneCycling::CellUpTheGradientNonLinear
+4 2 2 1
+{exp['kU']}
+0.1
 1.0
-0.0 0.0
-4 5 6 7
+2.0
+4
+5
 1
 """
 
-with open("semicircle_leaf.model", "w") as f:
-    f.write(model)
-print("Written semicircle_leaf.model")
+    with open(f"{BASE_DIR}/semicircle_leaf2.model", "w") as f:
+        f.write(model)
 
-
-solver = """\
+    # Generate solver file
+    solver = """\
 RK5Adaptive
 0 10000
 2 50
 0.05 1e-5
 """
+    with open(f"{BASE_DIR}/semicircle_leaf2.solver", "w") as f:
+        f.write(solver)
 
-with open("semicircle_leaf.solver", "w") as f:
-    f.write(solver)
-print("Written semicircle_leaf.solver")
+    # Run simulator
+    result = subprocess.run(
+        [SIMULATOR, "semicircle_leaf2.model", "semicircle_leaf2.init", "semicircle_leaf2.solver"],
+        cwd=BASE_DIR,
+        capture_output=True,
+        text=True
+    )
+    print(result.stdout[-200:] if result.stdout else "No output")
+
+    # Save vtk output to named folder
+    output_dir = f"{BASE_DIR}/results/{exp['name']}"
+    os.makedirs(output_dir, exist_ok=True)
+    vtk_src = f"{BASE_DIR}/vtk"
+    if os.path.exists(vtk_src):
+        shutil.copytree(vtk_src, f"{output_dir}/vtk", dirs_exist_ok=True)
+        print(f"Results saved to results/{exp['name']}/vtk/")
+
+print("\nAll experiments complete.")
