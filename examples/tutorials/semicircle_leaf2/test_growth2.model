@@ -1,0 +1,32 @@
+5
+1
+0
+MoveVertexRadially
+2 0
+0.001
+1
+WallGrowth::Stress
+4 2 1 1
+0.005
+0.0
+1
+1
+0
+1
+VertexFromWallSpring
+2 1 1
+0.01
+1.0
+0
+CenterCOM 0 0
+VertexNoUpdateFromIndexHoldY
+0 1
+15
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Division::ShortestPath2D
+4 1 1
+2000.0
+1.0
+0.3
+1
+3

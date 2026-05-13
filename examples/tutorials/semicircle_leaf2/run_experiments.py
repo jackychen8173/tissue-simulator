@@ -87,10 +87,10 @@ def createSemicircle(nRings, nCols, outputName, numCellVariables,
 
 # Parameter combinations to test
 experiments = [
-    {"name": "low_transport",  "c_A": 0.05, "d_A": 0.001, "T": 0.5, "D": 0.002, "kU": 0.3},
-    {"name": "med_transport",  "c_A": 0.05, "d_A": 0.001, "T": 1.3, "D": 0.002, "kU": 0.3},
-    {"name": "high_transport", "c_A": 0.05, "d_A": 0.001, "T": 6.0, "D": 0.002, "kU": 0.3},
-    {"name": "paper_values",   "c_A": 0.03, "d_A": 0.05,  "T": 6.0, "D": 0.002, "kU": 4e-3},
+    {"name": "low_transport",  "c_A": 0.05, "d_A": 0.001, "T": 0.5, "D": 0.002, "kU": 0.3, "nRings": 4, "nCols": 14},
+    {"name": "med_transport",  "c_A": 0.05, "d_A": 0.001, "T": 1.3, "D": 0.002, "kU": 0.3, "nRings": 4, "nCols": 14},
+    {"name": "high_transport", "c_A": 0.05, "d_A": 0.001, "T": 6.0, "D": 0.002, "kU": 0.3, "nRings": 6, "nCols": 20},
+    {"name": "paper_values",   "c_A": 0.03, "d_A": 0.05,  "T": 6.0, "D": 0.002, "kU": 4e-3, "nRings": 8, "nCols": 28},
 ]
 
 SIMULATOR = "/mnt/c/Users/jchen/tissue-simulator/bin/simulator"
@@ -101,7 +101,7 @@ for exp in experiments:
 
     # Generate init file
     createSemicircle(
-        nRings=4, nCols=14,
+        nRings=exp['nRings'], nCols=exp['nCols'],
         outputName=f"{BASE_DIR}/semicircle_leaf2.init",
         numCellVariables=5,
         cellsMean=[0.0]*5,
@@ -114,10 +114,22 @@ for exp in experiments:
 
     # Generate model file
     model = f"""\
-7
+9
+2
 0
+MoveVertexRadially
+2 0
+0.001
+1
+WallGrowth::Stress
+4 2 1 1
+0.005
+0.0
+1
+1
 0
-WallMechanics::Spring
+1
+VertexFromWallSpring
 2 1 1
 0.01
 1.0
@@ -155,6 +167,16 @@ MembraneCycling::CellUpTheGradientNonLinear
 4
 5
 1
+Division::ShortestPath2D
+4 1 1
+1.0
+1.0
+0.3
+1
+3
+RemovalOutsideRadius
+1 0
+220.0
 """
 
     with open(f"{BASE_DIR}/semicircle_leaf2.model", "w") as f:

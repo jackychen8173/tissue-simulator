@@ -4,20 +4,17 @@ import random
 def createSemicircle(nRings, nCols, outputName, numCellVariables,
     cellsMean, cellsSpread, numWallVariables, wallsMean, wallsSpread):
 
-    R_max = 200.0
+    R_max = 10.0
     radii = [R_max * (r+1) / nRings for r in range(nRings)]
     angles = [i * math.pi / nCols for i in range(nCols + 1)]
 
+    R_inner = R_max * 0.05  # small inner arc to avoid zero-length walls
     verts = []
-    # This replaces the flat x = -R_max to R_max loop
     for i in range(nCols + 1):
         a = angles[i]
-        # Calculate the starting inner radius (r=0 would be 50.0). 
-        # Using a very small radius for the origin avoids distortion.
-        r_inner = radii[0] * 0.1  
-        verts.append((-r_inner * math.cos(a), -r_inner * math.sin(a)))
+        verts.append((-R_inner * math.cos(a), -R_inner * math.sin(a)))
 
-    # 2. Create the rest of the rings 
+    # 2. Create the concentric rings
     for r in range(nRings):
         R = radii[r]
         for i in range(nCols + 1):
@@ -73,15 +70,13 @@ def createSemicircle(nRings, nCols, outputName, numCellVariables,
                 f.write(f"{d1} {d2} ")
             f.write("\n")
         f.write(f"\n{nCells} {numCellVariables + 4}\n")
-        apex_cols = set(range(nCols//2 - 1, nCols//2 + 1))
         for r in range(nRings):
             for c in range(nCols):
-                if r == nRings-1 and c in apex_cols:
-                    auxin = 10.0
-                else:
-                    auxin = 0.0
-                pin_cyto = 0.1
-                f.write(f"1 0 1 0.9 {auxin} {pin_cyto} 0.0 0.0 0.0\n")
+                extra = ""
+                for j in range(numCellVariables):
+                    val = cellsMean[j] + cellsSpread[j] * (2*random.uniform(0,1)-1)
+                    extra += f" {val}"
+                f.write(f"1 0 1 0.9{extra}\n")
 
     print(f"Written {outputName}: {nCells} cells, {nWalls} walls, {nVerts} vertices")
 
@@ -99,47 +94,36 @@ createSemicircle(
 
 
 model = """\
-7
+3
+2
 0
+MoveVertexRadially
+2 0
+0.001
+1
+WallGrowth::Stress
+4 2 1 1
+0.005
+0.0
+1
+1
 0
-WallMechanics::Spring
+1
+VertexFromWallSpring
 2 1 1
 0.01
 1.0
 0
-CenterCOM 0 0
-Creation::Zero
-1 1 1
-0.01
-4
-Degradation::One
-1 1 1
-0.001
-4
-DiffusionActiveTransportCell
-2 2 1 1
-0.002
-1.3
-4
-1
-Creation::One
-1 2 1 1
-0.005
-5
-4
-Degradation::One
-1 1 1
-0.005
-5
-MembraneCycling::CellUpTheGradientNonLinear
-4 2 2 1
-0.3
-0.1
+Division::ShortestPath2D
+4 1 1
+5.0
 1.0
-2.0
-4
-5
+0.1
 1
+3
+RemovalOutsideRadius
+1 0
+15.0
 """
 
 with open("semicircle_leaf2.model", "w") as f:
@@ -149,9 +133,9 @@ print("Written semicircle_leaf2.model")
 
 solver = """\
 RK5Adaptive
-0 10000
-2 50
-0.05 1e-5
+0 5000
+2 100
+0.5 1e-5
 """
 
 with open("semicircle_leaf2.solver", "w") as f:
