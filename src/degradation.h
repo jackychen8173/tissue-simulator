@@ -486,5 +486,51 @@ namespace Degradation {
 		       DataMatrix &sdydtWall,
 		       DataMatrix &sdydtVertex );
   };
+  ///
+  /// @brief In each cell of a given type a molecule is degraded with a constant rate (dependent on its own conc)
+  ///
+  /// @details The variable update is for each cell given by
+  /// @f[ \frac{dc}{dt} = - k_c c@f]
+  /// if @f$ cellData[typeIndex] == typeValue @f$, otherwise zero. This allows a fixed cell
+  /// type variable (e.g. set per cell in the init file and inherited by daughters on division)
+  /// to mark a subset of cells (e.g. a "sink" region) as constant consumers, without
+  /// having to track cell indices through divisions (cf. Degradation::OneFromList).
+  /// In a model file the reaction is defined as
+  /// @verbatim
+  /// Degradation::FromType 2 2 1 1
+  /// k_c type_value
+  /// c_index
+  /// type_index
+  /// @endverbatim
+  ///
+  class FromType : public BaseReaction {
+  public:
+    ///
+    /// @brief Main constructor
+    ///
+    /// This is the main constructor which sets the parameters and variable
+    /// indices that defines the reaction.
+    ///
+    /// @param paraValue vector with parameters
+    ///
+    /// @param indValue vector of vectors with variable indices
+    ///
+    /// @see BaseReaction::createReaction(std::vector<double> &paraValue,...)
+    ///
+    FromType(std::vector<double> &paraValue,
+	     std::vector< std::vector<size_t> > &indValue );
+    ///
+    /// @brief Derivative function for this reaction class
+    ///
+    /// @see BaseReaction::derivs(Compartment &compartment,size_t species,...)
+    ///
+    void derivs(Tissue &T,
+		DataMatrix &cellData,
+		DataMatrix &wallData,
+		DataMatrix &vertexData,
+		DataMatrix &cellDerivs,
+		DataMatrix &wallDerivs,
+		DataMatrix &vertexDerivs );
+  };
 } // end namespace Degradation
 #endif

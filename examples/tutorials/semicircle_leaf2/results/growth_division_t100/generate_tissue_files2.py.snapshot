@@ -1,26 +1,26 @@
-import subprocess
-import os
-import shutil
 import math
 import random
 
 def createSemicircle(nRings, nCols, outputName, numCellVariables,
     cellsMean, cellsSpread, numWallVariables, wallsMean, wallsSpread):
 
-    R_max = 200.0
+    R_max = 10.0
     radii = [R_max * (r+1) / nRings for r in range(nRings)]
     angles = [i * math.pi / nCols for i in range(nCols + 1)]
 
+    R_inner = R_max * 0.05  # small inner arc to avoid zero-length walls
     verts = []
-    # This replaces the flat x = -R_max to R_max loop
+    # 1. Create the base vertices evenly spaced along the FLAT top axis (y = 0)
+    # This prevents MoveVertexRadially from warping a curved inner arc into the flat zone.
     for i in range(nCols + 1):
-        a = angles[i]
-        # Calculate the starting inner radius (r=0 would be 50.0). 
-        # Using a very small radius for the origin avoids distortion.
-        r_inner = radii[0] * 0.1  
-        verts.append((-r_inner * math.cos(a), r_inner * math.sin(a)))
+        # Linearly space x from -R_max to R_max across the columns
+        x = -R_max + i * (2 * R_max / nCols)
+        # Scaled down to match an inner boundary width if needed, or set to a flat line:
+        # To completely close the central gap perfectly linearly:
+        x_flat = - (radii[0] * 0.1) + i * ((2 * radii[0] * 0.1) / nCols)
+        verts.append((x_flat, 0.0))
 
-    # 2. Create the rest of the rings 
+    # 2. Create the concentric rings (True arcs)
     for r in range(nRings):
         R = radii[r]
         for i in range(nCols + 1):
@@ -89,51 +89,33 @@ def createSemicircle(nRings, nCols, outputName, numCellVariables,
     print(f"Written {outputName}: {nCells} cells, {nWalls} walls, {nVerts} vertices")
 
 
-# Parameter combinations to test
-# c_A/d_A: background auxin production/decay (all cells)
-# c_A_source/d_A_sink: extra production at the outer-margin source ring / extra
-#                      consumption at the base sink ring (see cell type, set in createSemicircle)
-# T/D: PIN-mediated active transport rate / passive diffusion rate
-# kU: PIN exocytosis rate (MembraneCycling::CellUpTheGradientNonLinear p_0)
-experiments = [
-    {"name": "low_transport",  "c_A": 0.05, "d_A": 0.001, "c_A_source": 0.5, "d_A_sink": 0.05, "T": 0.5, "D": 0.002, "kU": 0.3,  "nRings": 4, "nCols": 14},
-    {"name": "med_transport",  "c_A": 0.05, "d_A": 0.001, "c_A_source": 0.5, "d_A_sink": 0.05, "T": 1.3, "D": 0.002, "kU": 0.3,  "nRings": 4, "nCols": 14},
-    {"name": "high_transport", "c_A": 0.05, "d_A": 0.001, "c_A_source": 0.5, "d_A_sink": 0.05, "T": 6.0, "D": 0.002, "kU": 0.3,  "nRings": 6, "nCols": 20},
-    {"name": "paper_values",   "c_A": 0.03, "d_A": 0.05,  "c_A_source": 0.3, "d_A_sink": 0.5,  "T": 6.0, "D": 0.002, "kU": 4e-3, "nRings": 8, "nCols": 28},
-]
+# Cell variables (after the 4 legacy/volume base columns and the type column):
+#   index 5 = auxin (A), index 6 = PIN
+# Wall variables (after the built-in length at index 0):
+#   index 1,2 = PIN membrane pair (cell1-facing, cell2-facing)
+createSemicircle(
+    nRings=4, nCols=14,
+    outputName="semicircle_leaf2.init",
+    numCellVariables=2,
+    cellsMean=[0.0, 0.1],
+    cellsSpread=[0.0, 0.0],
+    numWallVariables=1,
+    wallsMean=[0.0],
+    wallsSpread=[0.0]
+)
 
-SIMULATOR = "/mnt/c/Users/jchen/tissue-simulator/bin/simulator"
-BASE_DIR = "/mnt/c/Users/jchen/tissue-simulator/examples/tutorials/semicircle_leaf2"
 
-for exp in experiments:
-    print(f"\nRunning experiment: {exp['name']}")
-
-    # Generate init file
-    # Cell variables: index 5 = auxin (A), index 6 = PIN
-    # Wall variables: index 1,2 = PIN membrane pair
-    createSemicircle(
-        nRings=exp['nRings'], nCols=exp['nCols'],
-        outputName=f"{BASE_DIR}/semicircle_leaf2.init",
-        numCellVariables=2,
-        cellsMean=[0.0, 0.1],
-        cellsSpread=[0.0, 0.0],
-        numWallVariables=1,
-        wallsMean=[0.0],
-        wallsSpread=[0.0]
-    )
-
-    # Generate model file
-    model = f"""\
+model = """\
 12
-1
+2
 0
 MoveVertexRadially
 2 0
-0.0005
+0.006
 1
 WallGrowth::Stress
 4 2 1 1
-0.003
+0.048
 0.0
 1
 1
@@ -147,28 +129,28 @@ VertexFromWallSpring
 CenterCOM 0 0
 Creation::Zero
 1 1 1
-{exp['c_A']}
+0.01
 5
 Degradation::One
 1 1 1
-{exp['d_A']}
+0.001
 5
 Creation::FromType
 2 2 1 1
-{exp['c_A_source']}
+0.05
 1
 5
 4
 Degradation::FromType
 2 2 1 1
-{exp['d_A_sink']}
+0.05
 2
 5
 4
 DiffusionActiveTransportCell
 2 2 1 1
-{exp['D']}
-{exp['T']}
+0.002
+1.3
 5
 1
 Creation::One
@@ -182,7 +164,7 @@ Degradation::One
 6
 MembraneCycling::CellUpTheGradientNonLinear
 4 2 2 1
-{exp['kU']}
+0.3
 0.1
 1.0
 2.0
@@ -191,41 +173,28 @@ MembraneCycling::CellUpTheGradientNonLinear
 1
 Division::ShortestPath2D
 4 1 1
-5.0
+8.0
 1.0
 0.1
 1
 3
+RemovalOutsideRadius
+1 0
+500.0
 """
 
-    with open(f"{BASE_DIR}/semicircle_leaf2.model", "w") as f:
-        f.write(model)
+with open("semicircle_leaf2.model", "w") as f:
+    f.write(model)
+print("Written semicircle_leaf2.model")
 
-    # Generate solver file
-    solver = """\
+
+solver = """\
 RK5Adaptive
-0 10000
-2 50
-0.05 1e-5
+0 100
+2 100
+0.5 1e-5
 """
-    with open(f"{BASE_DIR}/semicircle_leaf2.solver", "w") as f:
-        f.write(solver)
 
-    # Run simulator
-    result = subprocess.run(
-        [SIMULATOR, "semicircle_leaf2.model", "semicircle_leaf2.init", "semicircle_leaf2.solver"],
-        cwd=BASE_DIR,
-        capture_output=True,
-        text=True
-    )
-    print(result.stdout[-200:] if result.stdout else "No output")
-
-    # Save vtk output to named folder
-    output_dir = f"{BASE_DIR}/results/{exp['name']}"
-    os.makedirs(output_dir, exist_ok=True)
-    vtk_src = f"{BASE_DIR}/vtk"
-    if os.path.exists(vtk_src):
-        shutil.copytree(vtk_src, f"{output_dir}/vtk", dirs_exist_ok=True)
-        print(f"Results saved to results/{exp['name']}/vtk/")
-
-print("\nAll experiments complete.")
+with open("semicircle_leaf2.solver", "w") as f:
+    f.write(solver)
+print("Written semicircle_leaf2.solver")

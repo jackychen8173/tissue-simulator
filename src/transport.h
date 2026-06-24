@@ -355,6 +355,55 @@ class DiffusionActiveTransportCell : public BaseReaction {
 };
 
 ///
+/// @brief A cell to cell PIN-mediated active transport reaction with saturating auxin dependence
+///
+/// @details A reaction for transport of a molecule (auxin) between neighboring cells through a
+/// membrane localised efflux carrier (PIN), where the carrier's effect saturates with the local
+/// concentration of the transported molecule (Michaelis-Menten-like, half-max at concentration 1):
+///
+///  @f[ \frac{dA_i}{dt} =  T \sum_{neigh} \left( P_{ni} \frac{A_n}{1+A_n} - P_{in} \frac{A_i}{1+A_i} \right) @f]
+///
+/// where T is the PIN permeability constant, i is the cell, n is the neighboring cell and in/ni are
+/// the neighboring membrane sections (each wall keeps two variables per membrane molecule).
+///
+/// In a model file the reaction is defined as
+///
+/// @verbatim
+/// PINSaturatingTransport 1 2[3] 1 1 [1]
+/// T
+/// A_{cellIndex}
+/// P_{wallindex}
+/// [fluxSave_{wallIndex}]
+/// @endverbatim
+///
+/// If the optional third index level is given, the signed flux for the wall is saved using the
+/// same convention as DiffusionActiveTransportCell: fluxSave_{wallIndex} holds the magnitude of
+/// flow from cell1 to cell2, fluxSave_{wallIndex}+1 holds the magnitude from cell2 to cell1 (only
+/// one of the pair is nonzero).
+///
+/// @see DiffusionActiveTransportCell
+///
+class PINSaturatingTransport : public BaseReaction {
+   public:
+    PINSaturatingTransport(std::vector<double> &paraValue,
+                           std::vector<std::vector<size_t> >
+                               &indValue);
+
+    ///
+    /// @brief Derivative function for this reaction class
+    ///
+    /// @see BaseReaction::derivs(Compartment &compartment,size_t species,...)
+    ///
+    void derivs(Tissue &T,
+                DataMatrix &cellData,
+                DataMatrix &wallData,
+                DataMatrix &vertexData,
+                DataMatrix &cellDerivs,
+                DataMatrix &wallDerivs,
+                DataMatrix &vertexDerivs);
+};
+
+///
 /// @brief A cell to cell transport reaction
 ///
 /// A reaction for transport molecules from cell to cell dependent on a membrane localised efflux carrier. The

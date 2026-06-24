@@ -785,6 +785,105 @@ void DiffusionActiveTransportCell::
         }
     }
 }
+
+PINSaturatingTransport::
+    PINSaturatingTransport(std::vector<double> &paraValue,
+                           std::vector<std::vector<size_t> >
+                               &indValue) {
+    // Do some checks on the parameters and variable indeces
+    //
+    if (paraValue.size() != 1) {
+        std::cerr << "PINSaturatingTransport::"
+                  << "PINSaturatingTransport() "
+                  << "One parameter used (T, the PIN permeability constant)."
+                  << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    if ((indValue.size() != 2 || indValue[0].size() != 1 || indValue[1].size() != 1) &&
+        (indValue.size() != 3 || indValue[0].size() != 1 || indValue[1].size() != 1 || indValue[2].size() != 1)) {
+        std::cerr << "PINSaturatingTransport::"
+                  << "PINSaturatingTransport() "
+                  << "One cell variable index (auxin) at first level and one wall variable"
+                  << " index (PIN) at second level are always used." << std::endl;
+        std::cerr << "An extra wall index for saving flux can be given in third level." << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    // Set the variable values
+    //
+    setId("PINSaturatingTransport");
+    setParameter(paraValue);
+    setVariableIndex(indValue);
+
+    // Set the parameter identities
+    //
+    std::vector<std::string> tmp(numParameter());
+    tmp.resize(numParameter());
+    tmp[0] = "T";
+    setParameterId(tmp);
+}
+
+void PINSaturatingTransport::
+    derivs(Tissue &T,
+           DataMatrix &cellData,
+           DataMatrix &wallData,
+           DataMatrix &vertexData,
+           DataMatrix &cellDerivs,
+           DataMatrix &wallDerivs,
+           DataMatrix &vertexDerivs) {
+    size_t numCells = T.numCell();
+    size_t aI = variableIndex(0, 0);   // auxin
+    size_t pwI = variableIndex(1, 0);  // pin (membrane/wall)
+
+    assert(aI < cellData[0].size() &&
+           pwI < wallData[0].size());
+
+    for (size_t i = 0; i < numCells; ++i) {
+        size_t numWalls = T.cell(i).numWall();
+        for (size_t k = 0; k < numWalls; ++k) {
+            size_t j = T.cell(i).wall(k)->index();
+            if (T.cell(i).wall(k)->cell1()->index() == i && T.cell(i).wall(k)->cell2() != T.background()) {
+                // cell-cell transport
+                size_t iNeighbor = T.cell(i).wall(k)->cell2()->index();
+                if (i < iNeighbor) {
+                    double fNeigh = cellData[iNeighbor][aI] / (1.0 + cellData[iNeighbor][aI]);
+                    double fSelf = cellData[i][aI] / (1.0 + cellData[i][aI]);
+                    double fac = parameter(0) * (wallData[j][pwI] * fSelf - wallData[j][pwI + 1] * fNeigh);
+                    cellDerivs[i][aI] -= fac;
+                    cellDerivs[iNeighbor][aI] += fac;
+                    if (numVariableIndexLevel() == 3) {  // save flux
+                        if (fac >= 0.0) {
+                            wallData[j][variableIndex(2, 0)] = fac;
+                            wallData[j][variableIndex(2, 0) + 1] = 0.0;
+                        } else {
+                            wallData[j][variableIndex(2, 0)] = 0.0;
+                            wallData[j][variableIndex(2, 0) + 1] = -fac;
+                        }
+                    }
+                }
+            } else if (T.cell(i).wall(k)->cell2()->index() == i && T.cell(i).wall(k)->cell1() != T.background()) {
+                // cell-cell transport
+                size_t iNeighbor = T.cell(i).wall(k)->cell1()->index();
+                if (i < iNeighbor) {
+                    double fNeigh = cellData[iNeighbor][aI] / (1.0 + cellData[iNeighbor][aI]);
+                    double fSelf = cellData[i][aI] / (1.0 + cellData[i][aI]);
+                    double fac = parameter(0) * (wallData[j][pwI + 1] * fSelf - wallData[j][pwI] * fNeigh);
+                    cellDerivs[i][aI] -= fac;
+                    cellDerivs[iNeighbor][aI] += fac;
+                    if (numVariableIndexLevel() == 3) {  // save flux
+                        if (fac >= 0.0) {
+                            wallData[j][variableIndex(2, 0) + 1] = fac;
+                            wallData[j][variableIndex(2, 0)] = 0.0;
+                        } else {
+                            wallData[j][variableIndex(2, 0) + 1] = 0.0;
+                            wallData[j][variableIndex(2, 0)] = -fac;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 ActiveTransportWall::
     ActiveTransportWall(std::vector<double> &paraValue,
                         std::vector<std::vector<size_t> >

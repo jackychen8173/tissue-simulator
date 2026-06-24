@@ -239,13 +239,13 @@ class LocalWallFeedbackLinear : public BaseReaction {
 /// @endverbatim
 ///
 class CellUpTheGradientNonLinear : public BaseReaction {
-  
+
  public:
-  
- CellUpTheGradientNonLinear(std::vector<double> &paraValue, 
-		std::vector< std::vector<size_t> > 
+
+ CellUpTheGradientNonLinear(std::vector<double> &paraValue,
+		std::vector< std::vector<size_t> >
 		&indValue );
-  
+
   void derivs(Tissue &T,
 	      DataMatrix &cellData,
 	      DataMatrix &wallData,
@@ -256,6 +256,54 @@ class CellUpTheGradientNonLinear : public BaseReaction {
 };
 
 
+
+///
+/// @brief PIN allocation to the membrane combining up-the-gradient (UTG) and
+/// with-the-flux (WTF) mechanisms, plus constant detachment.
+///
+/// @details PIN cycles between the cytoplasm and the membrane facing a given
+/// neighbor. The UTG term allocates PIN towards the neighbor proportionally to
+/// the neighbor's (saturating) auxin level; the WTF term reinforces the
+/// allocation in proportion to the (signed) intercellular auxin flux already
+/// flowing towards that neighbor, with linear and quadratic flux dependence;
+/// and a constant rate detaches membrane PIN back to the cytoplasm:
+///
+/// @f[ \frac{dP_{ij}}{dt} = k_U P_i \frac{f(A_j)}{1+P_i} + \frac{P_i}{1+P_i}(k_{Wq} \phi_{ij}^2 + k_{Wl} \phi_{ij}) - k_{off} P_{ij} @f]
+///
+/// where @f$ f(A_j) = \frac{K A_j}{K+A_j} @f$ and @f$ \phi_{ij} @f$ is the
+/// (non-negative) auxin flux flowing from cell i towards neighbor j, read
+/// from a wall variable pair (e.g. saved by PINSaturatingTransport). Total
+/// PIN is conserved: whatever is added to/removed from the membrane is
+/// removed from/added to the cytoplasmic pool (@f$ dP_i/dt -= dP_{ij}/dt @f$).
+///
+/// In the model file the reaction is given by:
+/// @verbatim
+/// MembraneCycling::UTGWTF 5 3 2 1 1
+/// k_U k_off K k_Wq k_Wl
+/// ci_Auxin ci_PIN
+/// wi_PIN
+/// wi_FluxSave
+/// @endverbatim
+///
+/// @see CellUpTheGradientNonLinear
+/// @see PINSaturatingTransport
+///
+class UTGWTF : public BaseReaction {
+
+ public:
+
+ UTGWTF(std::vector<double> &paraValue,
+	std::vector< std::vector<size_t> >
+	&indValue );
+
+  void derivs(Tissue &T,
+	      DataMatrix &cellData,
+	      DataMatrix &wallData,
+	      DataMatrix &vertexData,
+	      DataMatrix &cellDerivs,
+	      DataMatrix &wallDerivs,
+	      DataMatrix &vertexDerivs );
+};
 
 
 ///

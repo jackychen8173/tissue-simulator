@@ -554,6 +554,96 @@ namespace Creation {
   };
 
   ///
+  /// @brief A wall molecule is produced with a constant rate (independent of its own conc)
+  ///
+  /// @details The variable update is for each wall variable given by
+  /// @f[ \frac{dc_w}{dt} = k_{cw} @f]
+  /// where @f$ k_{cw} @f$ is a constant parameter and @f$ c_w @f$ is the (molecular) variable/concentration
+  /// to be updated.
+  /// In a model file the reaction is defined as
+  /// @verbatim
+  /// Creation::OneWall 1 1 1
+  /// k_cw
+  /// cw_index
+  /// @endverbatim
+  ///
+  class OneWall : public BaseReaction {
+  public:
+    ///
+    /// @brief Main constructor
+    ///
+    /// This is the main constructor which sets the parameters and variable
+    /// indices that defines the reaction.
+    ///
+    /// @param paraValue vector with parameters
+    ///
+    /// @param indValue vector of vectors with variable indices
+    ///
+    /// @see BaseReaction::createReaction(std::vector<double> &paraValue,...)
+    ///
+    OneWall(std::vector<double> &paraValue,
+	    std::vector< std::vector<size_t> > &indValue );
+    ///
+    /// @brief Derivative function for this reaction class
+    ///
+    /// @see BaseReaction::derivs(Compartment &compartment,size_t species,...)
+    ///
+    void derivs(Tissue &T,
+		DataMatrix &cellData,
+		DataMatrix &wallData,
+		DataMatrix &vertexData,
+		DataMatrix &cellDerivs,
+		DataMatrix &wallDerivs,
+		DataMatrix &vertexDerivs );
+  };
+
+  ///
+  /// @brief In each cell of a given type a molecule is produced/created with a constant rate.
+  ///
+  /// @details The variable update is for each cell given by
+  /// @f[ \frac{dc}{dt} = k_c @f]
+  /// if @f$ cellData[typeIndex] == typeValue @f$, otherwise zero. This allows a fixed cell
+  /// type variable (e.g. set per cell in the init file and inherited by daughters on division)
+  /// to mark a subset of cells (e.g. a "source" region) as constant producers, without
+  /// having to track cell indices through divisions (cf. Creation::FromList).
+  /// In a model file the reaction is defined as
+  /// @verbatim
+  /// Creation::FromType 2 2 1 1
+  /// k_c type_value
+  /// c_index
+  /// type_index
+  /// @endverbatim
+  class FromType : public BaseReaction {
+  public:
+    ///
+    /// @brief Main constructor
+    ///
+    /// This is the main constructor which sets the parameters and variable
+    /// indices that defines the reaction.
+    ///
+    /// @param paraValue vector with parameters
+    ///
+    /// @param indValue vector of vectors with variable indices
+    ///
+    /// @see BaseReaction::createReaction(std::vector<double> &paraValue,...)
+    ///
+    FromType(std::vector<double> &paraValue,
+	     std::vector< std::vector<size_t> > &indValue );
+    ///
+    /// @brief Derivative function for this reaction class
+    ///
+    /// @see BaseReaction::derivs(Compartment &compartment,size_t species,...)
+    ///
+    void derivs(Tissue &T,
+		DataMatrix &cellData,
+		DataMatrix &wallData,
+		DataMatrix &vertexData,
+		DataMatrix &cellDerivs,
+		DataMatrix &wallDerivs,
+		DataMatrix &vertexDerivs );
+  };
+
+  ///
   /// @brief Molecular creation oscillating with a sinusodial shape
   ///
   /// @details Creation reaction describing an oscillatory behavior described as 

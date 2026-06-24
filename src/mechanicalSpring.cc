@@ -101,11 +101,18 @@ namespace WallMechanics {
         distance = std::sqrt(distance);
         double wallLength=wallData[i][wallLengthIndex];
 
-        double coeff = parameter(0)*((1.0/wallLength)-(1.0/distance));
+        // Floor lengths used in the 1/length terms to avoid a force singularity
+        // for near-zero-length walls (e.g. immediately after cell division
+        // creates very short sub-walls).
+        static const double minSpringLength = 1e-3;
+        double wallLengthSafe = wallLength>minSpringLength ? wallLength : minSpringLength;
+        double distanceSafe = distance>minSpringLength ? distance : minSpringLength;
+
+        double coeff = parameter(0)*((1.0/wallLengthSafe)-(1.0/distanceSafe));
 
         // Use different spring elasticity if wall type is provided in wall vector
         if(numParameter()==3 && wallData[i][variableIndex(2,0)] ==1 ){
-          coeff = parameter(2)*((1.0/wallLength)-(1.0/distance));
+          coeff = parameter(2)*((1.0/wallLengthSafe)-(1.0/distanceSafe));
         }
         if( distance <= 0.0 && wallLength <=0.0 ) {
           //std::cerr << i << " - " << wallLength << " " << distance << std::endl;

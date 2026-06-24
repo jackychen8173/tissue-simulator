@@ -514,6 +514,106 @@ derivs(Tissue &T,
   }
  }
 
+UTGWTF::
+UTGWTF(std::vector<double> &paraValue,
+       std::vector< std::vector<size_t> >
+       &indValue ) {
+
+  //Do some checks on the parameters and variable indeces
+  //
+  if( paraValue.size()!=5 ) {
+    std::cerr << "UTGWTF::"
+	      << "UTGWTF() "
+	      << "5 parameters used: k_U k_off K k_Wq k_Wl (see membraneCycling.h)\n";
+    exit(0);
+  }
+  if( indValue.size() != 3 || indValue[0].size() != 2 ||
+      indValue[1].size() != 1 || indValue[2].size() != 1 ) {
+    std::cerr << "UTGWTF::"
+	      << "UTGWTF() "
+	      << "Two cell variable indices (auxin, PIN; first level), one wall variable"
+	      << " index (PIN; second level) and one wall variable index (saved flux; third level) are used."
+	      << std::endl;
+    exit(0);
+  }
+  //Set the variable values
+  //
+  setId("UTGWTF");
+  setParameter(paraValue);
+  setVariableIndex(indValue);
+
+  //Set the parameter identities
+  //
+  std::vector<std::string> tmp( numParameter() );
+  tmp.resize( numParameter() );
+  tmp[0] = "k_U";
+  tmp[1] = "k_off";
+  tmp[2] = "K";
+  tmp[3] = "k_Wq";
+  tmp[4] = "k_Wl";
+  setParameterId( tmp );
+}
+
+void UTGWTF::
+derivs(Tissue &T,
+       DataMatrix &cellData,
+       DataMatrix &wallData,
+       DataMatrix &vertexData,
+       DataMatrix &cellDerivs,
+       DataMatrix &wallDerivs,
+       DataMatrix &vertexDerivs )
+{
+  size_t numCells = T.numCell();
+  size_t aI = variableIndex(0,0);//auxin
+  size_t pI = variableIndex(0,1);//pin (cytoplasmic)
+  size_t pwI = variableIndex(1,0);//pin (membrane/wall)
+  size_t fI = variableIndex(2,0);//saved flux (wall)
+
+  double k_U = parameter(0);
+  double k_off = parameter(1);
+  double K = parameter(2);
+  double k_Wq = parameter(3);
+  double k_Wl = parameter(4);
+
+  assert( aI<cellData[0].size() &&
+	  pI<cellData[0].size() &&
+	  pwI<wallData[0].size() &&
+	  fI<wallData[0].size() );
+
+  for (size_t i=0; i<numCells; ++i) {
+
+    size_t numWalls = T.cell(i).numWall();
+
+    for (size_t k=0; k<numWalls; ++k) {
+      size_t j = T.cell(i).wall(k)->index();
+
+      if( T.cell(i).wall(k)->cell1()->index() == i && T.cell(i).wall(k)->cell2() != T.background() ) {
+	size_t cellNeigh = T.cell(i).wall(k)->cell2()->index();
+	double fNeigh = K*cellData[cellNeigh][aI]/(K+cellData[cellNeigh][aI]);
+	double flux = wallData[j][fI]; // magnitude flowing from i (cell1) towards neighbor (cell2)
+	double Pi = cellData[i][pI];
+	double fac = k_U*Pi*fNeigh/(1.0+Pi)
+	  + (Pi/(1.0+Pi))*(k_Wq*flux*flux + k_Wl*flux)
+	  - k_off*wallData[j][pwI];
+	wallDerivs[j][pwI] += fac;
+	cellDerivs[i][pI] -= fac;
+      }
+
+      else if( T.cell(i).wall(k)->cell2()->index() == i && T.cell(i).wall(k)->cell1() != T.background() ) {
+	size_t cellNeigh = T.cell(i).wall(k)->cell1()->index();
+	double fNeigh = K*cellData[cellNeigh][aI]/(K+cellData[cellNeigh][aI]);
+	double flux = wallData[j][fI+1]; // magnitude flowing from i (cell2) towards neighbor (cell1)
+	double Pi = cellData[i][pI];
+	double fac = k_U*Pi*fNeigh/(1.0+Pi)
+	  + (Pi/(1.0+Pi))*(k_Wq*flux*flux + k_Wl*flux)
+	  - k_off*wallData[j][pwI+1];
+	wallDerivs[j][pwI+1] += fac;
+	cellDerivs[i][pI] -= fac;
+      }
+    }
+  }
+}
+
 CellUpTheGradientLinear::
 CellUpTheGradientLinear(std::vector<double> &paraValue, 
 	      std::vector< std::vector<size_t> > 

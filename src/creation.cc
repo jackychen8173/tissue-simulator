@@ -707,12 +707,116 @@ namespace Creation {
 	  T.cell(cellI).calculateVolume(vertexData);
     }
     else {
-      //Add const conc to the listed cells 
-      for (size_t cellI = 0; cellI < proCells; ++cellI) 
+      //Add const conc to the listed cells
+      for (size_t cellI = 0; cellI < proCells; ++cellI)
 	cellDerivs[variableIndex(1,cellI)][cIndex] += parameter(0);
     }
   }
-  
+
+  FromType::
+  FromType(std::vector<double> &paraValue,
+	   std::vector< std::vector<size_t> >
+	   &indValue )
+  {
+    // Do some checks on the parameters and variable indeces
+    if( paraValue.size()!=2 ) {
+      std::cerr << "Creation::FromType::FromType() "
+		<< "Uses two parameters: k_c (production rate) and type_value "
+		<< "(the cell type value to match)."
+		<< std::endl;
+      exit(EXIT_FAILURE);
+    }
+    if( indValue.size() != 2 || indValue[0].size() != 1 || indValue[1].size() != 1 ) {
+      std::cerr << "Creation::FromType::"
+		<< "FromType() "
+		<< "Index for variable to be updated given in first level, "
+		<< "index of the cell type variable given in second level."
+		<< std::endl;
+      exit(EXIT_FAILURE);
+    }
+    // Set the variable values
+    setId("Creation::FromType");
+    setParameter(paraValue);
+    setVariableIndex(indValue);
+
+    // Set the parameter identities
+    std::vector<std::string> tmp( numParameter() );
+    tmp[0] = "k_c";
+    tmp[1] = "type_value";
+    setParameterId(tmp);
+  }
+
+  void FromType::
+  derivs(Tissue &T,
+	 DataMatrix &cellData,
+	 DataMatrix &wallData,
+	 DataMatrix &vertexData,
+	 DataMatrix &cellDerivs,
+	 DataMatrix &wallDerivs,
+	 DataMatrix &vertexDerivs )
+  {
+    size_t cIndex = variableIndex(0,0);
+    size_t typeIndex = variableIndex(1,0);
+    double k_c = parameter(0);
+    double typeValue = parameter(1);
+    size_t numCells = T.numCell();
+    //For each cell matching the given type
+    for (size_t cellI = 0; cellI < numCells; ++cellI) {
+      if (cellData[cellI][typeIndex] == typeValue) {
+	cellDerivs[cellI][cIndex] += k_c;
+      }
+    }
+  }
+
+  OneWall::
+  OneWall(std::vector<double> &paraValue,
+	  std::vector< std::vector<size_t> >
+	  &indValue )
+  {
+    // Do some checks on the parameters and variable indeces
+    //
+    if( paraValue.size()!=1 ) {
+      std::cerr << "Creation::OneWall::"
+		<< "OneWall() "
+		<< "Uses one parameter k_cw (constant production rate)." << std::endl;
+      exit(EXIT_FAILURE);
+    }
+    if( indValue.size() != 1 || indValue[0].size() != 1 ) {
+      std::cerr << "Creation::OneWall::"
+		<< "OneWall() "
+		<< "Index for wall variable to be updated (produced) given." << std::endl;
+      exit(EXIT_FAILURE);
+    }
+    //Set the variable values
+    //
+    setId("Creation::OneWall");
+    setParameter(paraValue);
+    setVariableIndex(indValue);
+
+    //Set the parameter identities
+    //
+    std::vector<std::string> tmp( numParameter() );
+    tmp[0] = "k_cw";
+    setParameterId( tmp );
+  }
+
+  void OneWall::
+  derivs(Tissue &T,
+	 DataMatrix &cellData,
+	 DataMatrix &wallData,
+	 DataMatrix &vertexData,
+	 DataMatrix &cellDerivs,
+	 DataMatrix &wallDerivs,
+	 DataMatrix &vertexDerivs ) {
+
+    size_t numWalls = T.numWall();
+    size_t wIndex = variableIndex(0,0);
+    double k_cw = parameter(0);
+    for (size_t k=0; k<numWalls; ++k) {
+      wallDerivs[k][wIndex] += k_cw;
+    }
+  }
+
   OneGeometric::
   OneGeometric(std::vector<double> &paraValue, 
 	       std::vector< std::vector<size_t> > 

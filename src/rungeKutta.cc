@@ -29,7 +29,13 @@ void RK5Adaptive::readParameterFile(std::ifstream &IN) {
 
 void RK5Adaptive::simulate(size_t verbose) {
     // double tiny = 1e-30; // Using NR definition
-    double tiny = 1e-9 * eps_;  // Caveat! Using new definition
+    // double tiny = 1e-9 * eps_;  // Caveat! Using new definition
+    // 1e-9*eps_ underflows to ~1e-14, far below typical noise in freshly
+    // created state (e.g. PIN on a wall just created by division starts
+    // near zero); the relative-error test then chases floating-point
+    // noise in a physically negligible quantity. Use an absolute floor
+    // instead, well below working concentrations but well above noise.
+    double tiny = 1e-6;
     double h, hNext, hDid;
 
     //
@@ -343,13 +349,17 @@ void RK5Adaptive::rkqs(double hTry, double &hDid, double &hNext,
              ak3C, ak3W, ak3V, ak4C, ak4W, ak4V, ak5C, ak5W, ak5V,
              ak6C, ak6W, ak6V, yTempRkckC, yTempRkckW, yTempRkckV);
         errMax = 0.0;
+        char worstKind = '?';
+        size_t worstI = 0, worstJ = 0;
         size_t N = cellData_.size();
         for (size_t i = 0; i < N; ++i) {
             size_t Nv = cellData_[i].size();
             for (size_t j = 0; j < Nv; ++j) {
                 aux = std::fabs(yErrC[i][j] / yScalC[i][j]);
-                if (aux > errMax)
+                if (aux > errMax) {
                     errMax = aux;
+                    worstKind = 'C'; worstI = i; worstJ = j;
+                }
             }
         }
         N = wallData_.size();
@@ -357,8 +367,10 @@ void RK5Adaptive::rkqs(double hTry, double &hDid, double &hNext,
             size_t Nv = wallData_[i].size();
             for (size_t j = 0; j < Nv; ++j) {
                 aux = std::fabs(yErrW[i][j] / yScalW[i][j]);
-                if (aux > errMax)
+                if (aux > errMax) {
                     errMax = aux;
+                    worstKind = 'W'; worstI = i; worstJ = j;
+                }
             }
         }
         N = vertexData_.size();
@@ -366,8 +378,10 @@ void RK5Adaptive::rkqs(double hTry, double &hDid, double &hNext,
             size_t Nv = vertexData_[i].size();
             for (size_t j = 0; j < Nv; ++j) {
                 aux = std::fabs(yErrV[i][j] / yScalV[i][j]);
-                if (aux > errMax)
+                if (aux > errMax) {
                     errMax = aux;
+                    worstKind = 'V'; worstI = i; worstJ = j;
+                }
             }
         }
         errMax /= eps_;
@@ -379,6 +393,25 @@ void RK5Adaptive::rkqs(double hTry, double &hDid, double &hNext,
             h = hTemp > 0.1 * h ? 0.1 * h : hTemp;
         tNew = t_ + h;
         if (tNew == t_) {
+            std::cerr << "Worst offender: kind=" << worstKind
+                       << " i=" << worstI << " j=" << worstJ
+                       << " errMax(scaled)=" << errMax << " h=" << h << "\n";
+            if (worstKind == 'C') {
+                std::cerr << "  cellData=" << cellData_[worstI][worstJ]
+                           << " yErr=" << yErrC[worstI][worstJ]
+                           << " yScal=" << yScalC[worstI][worstJ]
+                           << " yTemp=" << yTempC[worstI][worstJ] << "\n";
+            } else if (worstKind == 'W') {
+                std::cerr << "  wallData=" << wallData_[worstI][worstJ]
+                           << " yErr=" << yErrW[worstI][worstJ]
+                           << " yScal=" << yScalW[worstI][worstJ]
+                           << " yTemp=" << yTempW[worstI][worstJ] << "\n";
+            } else if (worstKind == 'V') {
+                std::cerr << "  vertexData=" << vertexData_[worstI][worstJ]
+                           << " yErr=" << yErrV[worstI][worstJ]
+                           << " yScal=" << yScalV[worstI][worstJ]
+                           << " yTemp=" << yTempV[worstI][worstJ] << "\n";
+            }
             std::cerr << "Warning stepsize underflow in solverRk5Adaptive::rkqs\n";
             exit(-1);
         }

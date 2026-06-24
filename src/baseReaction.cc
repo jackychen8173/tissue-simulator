@@ -355,6 +355,12 @@ BaseReaction::createReaction(std::vector<double> &paraValue,
     else if (idValue == "Creation::FromList" ||
              idValue == "CreationFromList")
         return new Creation::FromList(paraValue, indValue);
+    else if (idValue == "Creation::FromType" ||
+             idValue == "CreationFromType")
+        return new Creation::FromType(paraValue, indValue);
+    else if (idValue == "Creation::OneWall" ||
+             idValue == "CreationOneWall")
+        return new Creation::OneWall(paraValue, indValue);
     else if (idValue == "Creation::OneGeometric" ||
              idValue == "CreationOneGeometric")
         return new Creation::OneGeometric(paraValue, indValue);
@@ -391,6 +397,9 @@ BaseReaction::createReaction(std::vector<double> &paraValue,
     else if (idValue == "Degradation::OneFromList" ||
              idValue == "DegradationOneFromList")
         return new Degradation::OneFromList(paraValue, indValue);
+    else if (idValue == "Degradation::FromType" ||
+             idValue == "DegradationFromType")
+        return new Degradation::FromType(paraValue, indValue);
 
     // grn.h,grn.cc
     else if (idValue == "Grn::Hill" ||
@@ -427,6 +436,8 @@ BaseReaction::createReaction(std::vector<double> &paraValue,
         return new ActiveTransportCellEfflux(paraValue, indValue);
     else if (idValue == "DiffusionActiveTransportCell")
         return new DiffusionActiveTransportCell(paraValue, indValue);
+    else if (idValue == "PINSaturatingTransport")
+        return new PINSaturatingTransport(paraValue, indValue);
     else if (idValue == "ActiveTransportCellEffluxMM")
         return new ActiveTransportCellEffluxMM(paraValue, indValue);
     else if (idValue == "ActiveTransportWall")
@@ -706,6 +717,8 @@ BaseReaction::createReaction(std::vector<double> &paraValue,
         return new MembraneCycling::LocalWallFeedbackLinear(paraValue, indValue);
     else if (idValue == "MembraneCycling::CellUpTheGradientNonLinear")
         return new MembraneCycling::CellUpTheGradientNonLinear(paraValue, indValue);
+    else if (idValue == "MembraneCycling::UTGWTF")
+        return new MembraneCycling::UTGWTF(paraValue, indValue);
     else if (idValue == "MembraneCycling::CellUpTheGradientLinear")
         return new MembraneCycling::CellUpTheGradientLinear(paraValue, indValue);
     else if (idValue == "MembraneCycling::PINFeedbackNonLinear")

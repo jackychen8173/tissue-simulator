@@ -622,4 +622,61 @@ namespace Degradation {
       sdydtCell[cellI][cIndex]  += value;
     }
   }
+
+  FromType::
+  FromType(std::vector<double> &paraValue,
+	   std::vector< std::vector<size_t> >
+	   &indValue )
+  {
+    // Do some checks on the parameters and variable indeces
+    //
+    if( paraValue.size()!=2 ) {
+      std::cerr << "Degradation::FromType::"
+		<< "FromType() "
+		<< "Uses two parameters: k_d (degradation rate) and type_value "
+		<< "(the cell type value to match)." << std::endl;
+      exit(EXIT_FAILURE);
+    }
+    if( indValue.size() != 2 || indValue[0].size() != 1 || indValue[1].size() != 1 ) {
+      std::cerr << "Degradation::FromType::"
+		<< "FromType() "
+		<< "Index for variable to be degraded given in first level, "
+		<< "index of the cell type variable given in second level." << std::endl;
+      exit(EXIT_FAILURE);
+    }
+    //Set the variable values
+    //
+    setId("Degradation::FromType");
+    setParameter(paraValue);
+    setVariableIndex(indValue);
+
+    //Set the parameter identities
+    //
+    std::vector<std::string> tmp( numParameter() );
+    tmp[0] = "k_d";
+    tmp[1] = "type_value";
+    setParameterId( tmp );
+  }
+
+  void FromType::
+  derivs(Tissue &T,
+	 DataMatrix &cellData,
+	 DataMatrix &wallData,
+	 DataMatrix &vertexData,
+	 DataMatrix &cellDerivs,
+	 DataMatrix &wallDerivs,
+	 DataMatrix &vertexDerivs ) {
+
+    size_t cIndex = variableIndex(0,0);
+    size_t typeIndex = variableIndex(1,0);
+    double k_d = parameter(0);
+    double typeValue = parameter(1);
+    size_t numCells = T.numCell();
+    //For each cell matching the given type
+    for (size_t cellI = 0; cellI < numCells; ++cellI) {
+      if (cellData[cellI][typeIndex] == typeValue) {
+	cellDerivs[cellI][cIndex] -= k_d * cellData[cellI][cIndex];
+      }
+    }
+  }
 } // end namespace Degradation
