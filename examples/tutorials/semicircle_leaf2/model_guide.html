@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tissue Simulator — Model Reference</title>
+<style>
+/* ─── Token palette ─── */
+:root {
+  --bg:           #F3F6F4;
+  --bg-raised:    #FFFFFF;
+  --bg-code:      #E6EDE9;
+  --border:       #C8D6D0;
+  --border-light: #DDE7E2;
+
+  --text:         #19261F;
+  --text-muted:   #5F7A71;
+  --text-label:   #3D5C52;
+
+  --green:        #2A6B4F;
+  --green-bg:     #D8EEE4;
+  --green-mid:    #3D8464;
+
+  --amber:        #9E6120;
+  --amber-bg:     #F4E9D6;
+  --amber-mid:    #C07D2E;
+
+  --teal:         #1A7888;
+  --teal-bg:      #D2ECF0;
+
+  --red:          #9B3535;
+  --red-bg:       #F4DEDE;
+
+  --tag-normal:   #6B7D78;
+  --tag-source:   var(--green);
+  --tag-sink:     var(--amber);
+
+  --serif:        Georgia, 'Times New Roman', Times, serif;
+  --sans:         system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:         'Courier New', Courier, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:           #0E1914;
+    --bg-raised:    #162119;
+    --bg-code:      #0A1410;
+    --border:       #253D31;
+    --border-light: #1E3028;
+
+    --text:         #E0EBE5;
+    --text-muted:   #7A9E90;
+    --text-label:   #9BBFB0;
+
+    --green:        #4DBE8B;
+    --green-bg:     #0F2A1E;
+    --green-mid:    #3A9E72;
+
+    --amber:        #D4904E;
+    --amber-bg:     #2A1A08;
+    --amber-mid:    #B87A3C;
+
+    --teal:         #3EC5D6;
+    --teal-bg:      #0A2530;
+
+    --red:          #E07070;
+    --red-bg:       #2A1010;
+  }
+}
+:root[data-theme="light"] {
+  --bg:           #F3F6F4;
+  --bg-raised:    #FFFFFF;
+  --bg-code:      #E6EDE9;
+  --border:       #C8D6D0;
+  --border-light: #DDE7E2;
+  --text:         #19261F;
+  --text-muted:   #5F7A71;
+  --text-label:   #3D5C52;
+  --green:        #2A6B4F;
+  --green-bg:     #D8EEE4;
+  --green-mid:    #3D8464;
+  --amber:        #9E6120;
+  --amber-bg:     #F4E9D6;
+  --amber-mid:    #C07D2E;
+  --teal:         #1A7888;
+  --teal-bg:      #D2ECF0;
+  --red:          #9B3535;
+  --red-bg:       #F4DEDE;
+}
+:root[data-theme="dark"] {
+  --bg:           #0E1914;
+  --bg-raised:    #162119;
+  --bg-code:      #0A1410;
+  --border:       #253D31;
+  --border-light: #1E3028;
+  --text:         #E0EBE5;
+  --text-muted:   #7A9E90;
+  --text-label:   #9BBFB0;
+  --green:        #4DBE8B;
+  --green-bg:     #0F2A1E;
+  --green-mid:    #3A9E72;
+  --amber:        #D4904E;
+  --amber-bg:     #2A1A08;
+  --amber-mid:    #B87A3C;
+  --teal:         #3EC5D6;
+  --teal-bg:      #0A2530;
+  --red:          #E07070;
+  --red-bg:       #2A1010;
+}
+
+/* ─── Reset & base ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+/* ─── Layout ─── */
+.shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: auto 1fr;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  gap: 0 40px;
+}
+.site-header {
+  grid-column: 1 / -1;
+  padding: 40px 0 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.site-header h1 {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: normal;
+  color: var(--text);
+  text-wrap: balance;
+  line-height: 1.2;
+}
+.site-header .subtitle {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.site-header .paper-cite {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─── Nav ─── */
+nav {
+  grid-column: 1;
+  position: sticky;
+  top: 24px;
+  height: fit-content;
+  padding-bottom: 40px;
+}
+nav ul { list-style: none; }
+nav li + li { margin-top: 2px; }
+nav a {
+  display: block;
+  padding: 5px 10px;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 4px;
+  border-left: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+nav a:hover {
+  color: var(--green);
+  border-left-color: var(--green);
+  background: var(--green-bg);
+}
+.nav-section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-label);
+  padding: 16px 10px 4px;
+  font-weight: 600;
+}
+
+/* ─── Main content ─── */
+main { grid-column: 2; padding-bottom: 80px; }
+
+/* ─── Sections ─── */
+.section { margin-bottom: 56px; }
+.section-title {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: normal;
+  color: var(--text);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 22px;
+  text-wrap: balance;
+}
+.subsection-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-label);
+  margin: 28px 0 12px;
+}
+
+p { max-width: 68ch; margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+/* ─── Equation blocks ─── */
+.eq-block {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 18px 0;
+  overflow-x: auto;
+}
+.eq-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.eq {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: pre;
+}
+.eq-note {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ─── Code ─── */
+code {
+  font-family: var(--mono);
+  font-size: 0.84em;
+  background: var(--bg-code);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--teal);
+}
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 20px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin: 14px 0;
+  color: var(--text);
+}
+pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+.comment { color: var(--text-muted); }
+.kw { color: var(--green); }
+.num { color: var(--amber); }
+.str { color: var(--teal); }
+
+/* ─── Tables ─── */
+.table-wrap { overflow-x: auto; margin: 14px 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+th {
+  text-align: left;
+  padding: 8px 14px;
+  background: var(--bg-code);
+  border-bottom: 2px solid var(--border);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-label);
+  white-space: nowrap;
+}
+td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+  line-height: 1.5;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-raised); }
+.idx {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--amber);
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.var-name {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  color: var(--teal);
+}
+td.param-val {
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  color: var(--amber);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Cell-type tags ─── */
+.tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 2px 7px;
+  vertical-align: middle;
+}
+.tag-normal  { background: var(--bg-code);    color: var(--text-muted); }
+.tag-source  { background: var(--green-bg);   color: var(--green);     }
+.tag-sink    { background: var(--amber-bg);   color: var(--amber);     }
+.tag-wall    { background: var(--teal-bg);    color: var(--teal);      }
+.tag-cell    { background: var(--amber-bg);   color: var(--amber-mid); }
+.tag-new     { background: var(--green-bg);   color: var(--green-mid); font-size: 0.65rem; }
+.tag-reused  { background: var(--bg-code);    color: var(--text-muted); font-size: 0.65rem; }
+
+/* ─── Parameter cards ─── */
+.param-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+.param-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.param-card-name {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--amber);
+  margin-bottom: 4px;
+}
+.param-card-val {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.param-card-val strong { color: var(--amber-mid); }
+.param-card-desc { font-size: 0.83rem; color: var(--text); }
+.param-card-effect {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+}
+
+/* ─── Callout boxes ─── */
+.callout {
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 0.86rem;
+  max-width: 72ch;
+}
+.callout-green { background: var(--green-bg); border-left: 3px solid var(--green); }
+.callout-amber { background: var(--amber-bg); border-left: 3px solid var(--amber); }
+.callout-teal  { background: var(--teal-bg);  border-left: 3px solid var(--teal);  }
+.callout strong { font-weight: 700; }
+
+/* ─── Flow diagram ─── */
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 20px 0;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.flow-node {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-align: center;
+  min-width: 90px;
+}
+.flow-source { background: var(--green-bg);  color: var(--green);  border: 1px solid var(--green-mid); }
+.flow-normal { background: var(--bg-raised); color: var(--text);   border: 1px solid var(--border); }
+.flow-sink   { background: var(--amber-bg);  color: var(--amber);  border: 1px solid var(--amber-mid); }
+.flow-arrow  { color: var(--text-muted); font-size: 1.1rem; padding: 0 2px; }
+.flow-label  { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; font-weight: normal; }
+
+/* ─── File locations ─── */
+.file-ref {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: var(--bg-code);
+  border-radius: 3px;
+  padding: 1px 6px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 760px) {
+  .shell { grid-template-columns: 1fr; padding: 0 16px; }
+  nav { display: none; }
+  main { grid-column: 1; }
+  .site-header { grid-column: 1; }
+  .param-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <h1>Tissue Simulator — Model Reference Guide</h1>
+    <p class="subtitle">Full PIN + Plasmodesmata Auxin Canalization model &mdash; <code>semicircle_leaf2</code></p>
+    <p class="paper-cite">Based on: Holloway, Eiriksson &amp; Wenzel (2025), &ldquo;A unified auxin canalization model&hellip;&rdquo; <em>Front. Plant Sci.</em> 16:1621815</p>
+  </header>
+
+  <!-- ── Navigation ── -->
+  <nav aria-label="Page sections">
+    <div class="nav-section-label">Model</div>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#variables">Variables</a></li>
+      <li><a href="#cell-types">Cell Types</a></li>
+      <li><a href="#equations">Equations</a></li>
+    </ul>
+    <div class="nav-section-label">Parameters</div>
+    <ul>
+      <li><a href="#auxin-params">Auxin (Eq. 1)</a></li>
+      <li><a href="#pd-params">Plasmodesmata (Eq. 2)</a></li>
+      <li><a href="#pin-params">PIN Cytoplasmic (Eq. 3)</a></li>
+      <li><a href="#alloc-params">PIN Allocation (Eq. 4)</a></li>
+      <li><a href="#growth-params">Growth &amp; Division</a></li>
+    </ul>
+    <div class="nav-section-label">Running</div>
+    <ul>
+      <li><a href="#quick-edits">Customization</a></li>
+      <li><a href="#running">Build &amp; Run</a></li>
+      <li><a href="#paraview">ParaView</a></li>
+      <li><a href="#tuning">Tuning Tips</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Main ── -->
+  <main>
+
+    <!-- ═══ OVERVIEW ═══ -->
+    <section class="section" id="overview">
+      <h2 class="section-title">Overview</h2>
+      <p>This model implements the full four-equation auxin canalization system from Holloway et al. (2025) on a semicircular tissue with four concentric rings of cells. Auxin flows from a <span class="tag tag-source">source</span> ring (outer margin) to a <span class="tag tag-sink">sink</span> ring (base), with canalization emerging from the positive feedback between auxin flux and plasmodesmata (PD) opening and PIN membrane allocation.</p>
+
+      <div class="flow-diagram">
+        <div class="flow-node flow-source">Source ring<div class="flow-label">outer, type = 1</div></div>
+        <div class="flow-arrow">&#10230;</div>
+        <div class="flow-node flow-normal">Normal cells<div class="flow-label">type = 0</div></div>
+        <div class="flow-node flow-normal">Normal cells<div class="flow-label">type = 0</div></div>
+        <div class="flow-arrow">&#10230;</div>
+        <div class="flow-node flow-sink">Sink ring<div class="flow-label">base, type = 2</div></div>
+      </div>
+
+      <p>The model uses <strong>14 reactions</strong> plus 2 compartment-change rules (division and removal). Three reaction classes were written specifically for this model; the rest reuse existing simulator classes.</p>
+
+      <div class="callout callout-teal">
+        <strong>File to edit:</strong> All parameters and the entire model string live in <span class="file-ref">examples/tutorials/semicircle_leaf2/generate_tissue_files2.py</span>. Run it to regenerate <code>semicircle_leaf2.init</code>, <code>.model</code>, and <code>.solver</code> before re-running the simulator.
+      </div>
+    </section>
+
+    <!-- ═══ VARIABLES ═══ -->
+    <section class="section" id="variables">
+      <h2 class="section-title">Variable Layout</h2>
+
+      <div class="subsection-title">Cell Variables &mdash; 5 total</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Index</th><th>Name</th><th>Role</th><th>Init value</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="idx">0</td>
+              <td class="var-name">volume</td>
+              <td>Volume tracker &mdash; read by <code>Division::ShortestPath2D</code> to decide when to divide</td>
+              <td class="param-val">0.9</td>
+            </tr>
+            <tr>
+              <td class="idx">1</td>
+              <td class="var-name">type</td>
+              <td>Cell identity: <span class="tag tag-normal">0 normal</span> <span class="tag tag-source">1 source</span> <span class="tag tag-sink">2 sink</span> &mdash; never changes at runtime</td>
+              <td class="param-val">0 / 1 / 2</td>
+            </tr>
+            <tr>
+              <td class="idx">2</td>
+              <td class="var-name">Aprec</td>
+              <td>Auxin precursor &mdash; ramped up by <code>Creation::FromType</code> in source cells only; drives auxin production via <code>Creation::One</code></td>
+              <td class="param-val">0.5 (source)<br>0.0 (others)</td>
+            </tr>
+            <tr>
+              <td class="idx">3</td>
+              <td class="var-name">A</td>
+              <td>Auxin &mdash; the main transported signal; governed by Eq. 1</td>
+              <td class="param-val">0.0</td>
+            </tr>
+            <tr>
+              <td class="idx">4</td>
+              <td class="var-name">P</td>
+              <td>Cytoplasmic PIN protein pool &mdash; source for membrane allocation; governed by Eq. 3</td>
+              <td class="param-val">0.1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subsection-title">Wall Variables &mdash; 6 extra beyond built-in length</div>
+      <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:10px;">Index 0 (built-in length) is always present. The simulator's VTK writer reads extra wall variables in pairs; the total count must be even (6 here).</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Index</th><th>Name</th><th>Role</th><th>Init value</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="idx">0</td>
+              <td class="var-name">length</td>
+              <td>Built-in rest length &mdash; managed by the simulator automatically</td>
+              <td class="param-val">geometric</td>
+            </tr>
+            <tr>
+              <td class="idx">1</td>
+              <td class="var-name">Pij</td>
+              <td>PIN membrane concentration on the cell-1 face of this wall; governed by Eq. 4</td>
+              <td class="param-val">0.0</td>
+            </tr>
+            <tr>
+              <td class="idx">2</td>
+              <td class="var-name">Pji</td>
+              <td>PIN membrane concentration on the cell-2 face; directional pair with Pij</td>
+              <td class="param-val">0.0</td>
+            </tr>
+            <tr>
+              <td class="idx">3</td>
+              <td class="var-name">Dij</td>
+              <td>Plasmodesmata cross-section (symmetric); governs PD-diffusion rate and is itself updated by Eq. 2</td>
+              <td class="param-val">0.5</td>
+            </tr>
+            <tr>
+              <td class="idx">4</td>
+              <td class="var-name">(mirror)</td>
+              <td>Unused slot &mdash; exists only to keep the wall-variable count even for the VTK writer. Its value mirrors Dij at init but is never read by any reaction.</td>
+              <td class="param-val">0.5</td>
+            </tr>
+            <tr>
+              <td class="idx">5</td>
+              <td class="var-name">flux&#x2081;</td>
+              <td>Saved PIN-transport flux from cell-1 outward (written by <code>PINSaturatingTransport</code>, read by <code>MembraneCycling::UTGWTF</code> for the WTF term)</td>
+              <td class="param-val">0.0</td>
+            </tr>
+            <tr>
+              <td class="idx">6</td>
+              <td class="var-name">flux&#x2082;</td>
+              <td>Saved PIN-transport flux from cell-2 outward &mdash; directional pair with flux&#x2081;</td>
+              <td class="param-val">0.0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══ CELL TYPES ═══ -->
+    <section class="section" id="cell-types">
+      <h2 class="section-title">Cell Types</h2>
+      <p>Cell type is stored in <strong>cell variable index 1</strong> and never changes at runtime. Types are assigned in <span class="file-ref">generate_tissue_files2.py</span> at the <code>createSemicircle()</code> function:</p>
+
+<pre><code><span class="comment"># line 97 -- r is the ring index (0 = base, nRings-1 = outer margin)</span>
+cellType = <span class="num">1</span> <span class="kw">if</span> r == nRings - <span class="num">1</span> <span class="kw">else</span> (<span class="num">2</span> <span class="kw">if</span> r == <span class="num">0</span> <span class="kw">else</span> <span class="num">0</span>)</code></pre>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Value</th><th>Identity</th><th>Ring</th><th>What's different</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="idx">0</td>
+              <td><span class="tag tag-normal">Normal</span></td>
+              <td>All middle rings</td>
+              <td>Standard auxin production/decay only; Aprec starts at 0</td>
+            </tr>
+            <tr>
+              <td class="idx">1</td>
+              <td><span class="tag tag-source">Source</span></td>
+              <td>Outermost ring (<code>r = nRings-1</code>)</td>
+              <td><code>Creation::FromType</code> ramps Aprec here; Aprec starts at 0.5. Acts as the margin source in the paper's model.</td>
+            </tr>
+            <tr>
+              <td class="idx">2</td>
+              <td><span class="tag tag-sink">Sink</span></td>
+              <td>Innermost ring (<code>r = 0</code>)</td>
+              <td><code>Degradation::FromType</code> adds extra auxin decay here (rate <code>auxdec_sink</code>). Mimics the paper's basal sink.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-amber">
+        <strong>To add more cell types:</strong> add a new integer value (e.g., 3), assign it in the <code>cellType</code> logic above, then add a matching <code>Creation::FromType</code> or <code>Degradation::FromType</code> reaction in the model string with <code>type_value = 3</code>. Nothing in the C++ needs to change &mdash; the reactions are fully generic.
+      </div>
+    </section>
+
+    <!-- ═══ EQUATIONS ═══ -->
+    <section class="section" id="equations">
+      <h2 class="section-title">Equations &amp; Reaction Mapping</h2>
+
+      <p>The four coupled ODEs from the paper, and which simulator reactions implement each term:</p>
+
+      <!-- Eq 1 -->
+      <div class="eq-block">
+        <div class="eq-label">Equation 1 &mdash; Auxin dynamics (cell variable A, index 3)</div>
+        <div class="eq">dA&#x1D62;/dt = auxpr&middot;Aprec&#x1D62; &minus; auxdec&middot;A&#x1D62; [&minus; auxdec_sink&middot;A&#x1D62; if sink]
+        + T &middot; &Sigma;&#x2C7C; ( P&#x2C7C;&#x1D62;&middot;f(A&#x2C7C;) &minus; P&#x1D62;&#x2C7C;&middot;f(A&#x1D62;) )      &larr; PIN transport
+        + D &middot; &Sigma;&#x2C7C; D&#x1D62;&#x2C7C; &middot; (A&#x2C7C; &minus; A&#x1D62;)                  &larr; PD diffusion
+
+where  f(x) = x / (1 + x)</div>
+        <div class="eq-note">
+          Implemented by:
+          <span class="tag tag-reused">reused</span> <code>Creation::One</code> (auxpr&middot;Aprec term) &nbsp;
+          <span class="tag tag-reused">reused</span> <code>Degradation::One</code> (&minus;auxdec) &nbsp;
+          <span class="tag tag-reused">reused</span> <code>Degradation::FromType</code> (&minus;auxdec_sink, sink only) &nbsp;
+          <span class="tag tag-new">new</span> <code>PINSaturatingTransport</code> (PIN term) &nbsp;
+          <span class="tag tag-reused">reused</span> <code>Diffusion::ConductiveSimple</code> (PD term)
+        </div>
+      </div>
+
+      <!-- Eq 2 -->
+      <div class="eq-block">
+        <div class="eq-label">Equation 2 &mdash; Plasmodesmata dynamics (wall variable Dij, index 3)</div>
+        <div class="eq">dD&#x1D62;&#x2C7C;/dt = &alpha; &middot; &phi;&#x1D62;&#x2C7C;&sup2; + &beta; &minus; &gamma; &middot; D&#x1D62;&#x2C7C;
+
+where  &phi;&#x1D62;&#x2C7C; = D&#x1D62;&#x2C7C;&middot;(A&#x2C7C; &minus; A&#x1D62;)  is the local PD flux</div>
+        <div class="eq-note">
+          Implemented by:
+          <span class="tag tag-reused">reused</span> <code>Diffusion::ConductiveSimple</code> (&alpha;&middot;&phi;&sup2; &minus; &gamma;&middot;D&#x1D62;&#x2C7C; terms, using p&#x2081;=&alpha;, p&#x2082;=2, p&#x2083;=0, p&#x2084;=&gamma;/&alpha;) &nbsp;
+          <span class="tag tag-new">new</span> <code>Creation::OneWall</code> (&beta; background production on all walls)
+        </div>
+      </div>
+
+      <!-- Eq 3 -->
+      <div class="eq-block">
+        <div class="eq-label">Equation 3 &mdash; Cytoplasmic PIN pool (cell variable P, index 4)</div>
+        <div class="eq">dP&#x1D62;/dt = pinpr&middot;A&#x1D62; &minus; pindec&middot;P&#x1D62; &minus; &Sigma;&#x2C7C; dP&#x1D62;&#x2C7C;/dt</div>
+        <div class="eq-note">
+          The first two terms:
+          <span class="tag tag-reused">reused</span> <code>Creation::One</code> (pinpr&middot;A) &nbsp;
+          <span class="tag tag-reused">reused</span> <code>Degradation::One</code> (&minus;pindec&middot;P) &nbsp;
+          The &minus;&Sigma; dP&#x1D62;&#x2C7C;/dt conservation is automatic: <code>MembraneCycling::UTGWTF</code> adds to <code>wallDerivs[P&#x1D62;&#x2C7C;]</code> and subtracts the same amount from <code>cellDerivs[P]</code>, preserving total PIN.
+        </div>
+      </div>
+
+      <!-- Eq 4 -->
+      <div class="eq-block">
+        <div class="eq-label">Equation 4 &mdash; PIN membrane allocation (wall variables Pij / Pji, indices 1 / 2)</div>
+        <div class="eq">dP&#x1D62;&#x2C7C;/dt = kU &middot; P&#x1D62; &middot; g(A&#x2C7C;) / (1 + P&#x1D62;)            &larr; UTG term
+        + P&#x1D62; / (1 + P&#x1D62;) &middot; (kWq &middot; &phi;&sup2; + kWl &middot; &phi;)      &larr; WTF term
+        &minus; koff &middot; P&#x1D62;&#x2C7C;                                    &larr; dissociation
+
+where  g(x) = K&middot;x / (K + x),  &phi; = saved PIN flux toward neighbor j</div>
+        <div class="eq-note">
+          Implemented by:
+          <span class="tag tag-new">new</span> <code>MembraneCycling::UTGWTF</code> (all three sub-terms combined). Reads the saved flux from wall indices 5/6 (written by <code>PINSaturatingTransport</code>).
+        </div>
+      </div>
+
+      <div class="callout callout-green">
+        <strong>Key insight &mdash; PD feedback:</strong> <code>Diffusion::ConductiveSimple</code> already implements both Eq. 1's PD-diffusion term <em>and</em> Eq. 2's D&#x1D62;&#x2C7C; dynamics in one class. Setting its parameters p&#x2082;=2, p&#x2083;=0 matches the paper's additive &alpha;&middot;&phi;&sup2; form exactly; no new C++ class was needed.
+      </div>
+    </section>
+
+    <!-- ═══ AUXIN PARAMS ═══ -->
+    <section class="section" id="auxin-params">
+      <h2 class="section-title">Parameters &mdash; Auxin (Eq. 1)</h2>
+      <p>These control how auxin is produced, decays, and is transported. In <span class="file-ref">generate_tissue_files2.py</span>, look for the <code>params</code> dict around line 113.</p>
+
+      <div class="param-grid">
+        <div class="param-card">
+          <div class="param-card-name">aprec_ramp</div>
+          <div class="param-card-val">Current: <strong>0.01</strong> &nbsp;|&nbsp; Paper: 0.3&ndash;1.0</div>
+          <div class="param-card-desc">Rate at which the auxin precursor (Aprec) accumulates in source cells. Higher = faster buildup and earlier auxin gradient.</div>
+          <div class="param-card-effect">Increase to make the source &ldquo;fire&rdquo; faster. If too high the source auxin saturates before the tissue can canalize.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">auxpr</div>
+          <div class="param-card-val">Current: <strong>0.05</strong> &nbsp;|&nbsp; Paper: ~0.5</div>
+          <div class="param-card-desc">Rate of auxin conversion from Aprec via <code>Creation::One</code>. Scales how efficiently the precursor drives auxin synthesis.</div>
+          <div class="param-card-effect">Raise to push more auxin into the tissue from the source. Keep ratio auxpr/auxdec &gt; 1 to maintain a steady-state gradient.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">auxdec</div>
+          <div class="param-card-val">Current: <strong>0.01</strong> &nbsp;|&nbsp; Paper: ~0.05</div>
+          <div class="param-card-desc">First-order auxin decay everywhere (<code>Degradation::One</code>). Sets the background decay floor.</div>
+          <div class="param-card-effect">Higher auxdec shortens the effective range of the auxin signal. If the gradient doesn't reach the sink, lower this first.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">auxdec_sink</div>
+          <div class="param-card-val">Current: <strong>0.1</strong></div>
+          <div class="param-card-desc">Extra auxin decay rate applied only to sink-type cells (type=2). Drives the auxin gradient toward the base by keeping auxin low there.</div>
+          <div class="param-card-effect">Must be significantly larger than auxdec to maintain a sink. Raise if auxin pools at the base instead of draining.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">T_pin</div>
+          <div class="param-card-val">Current: <strong>1.0</strong> &nbsp;|&nbsp; Paper: ~6.0</div>
+          <div class="param-card-desc">PIN transport permeability &mdash; the T in Eq. 1. Scales how much PIN membrane concentration drives net auxin flow.</div>
+          <div class="param-card-effect">Increasing T strengthens PIN-mediated canalization. Very high T can cause oscillations if koff is too small. Paper uses T=6; try 2&ndash;4 as an intermediate step.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PD PARAMS ═══ -->
+    <section class="section" id="pd-params">
+      <h2 class="section-title">Parameters &mdash; Plasmodesmata (Eq. 2)</h2>
+      <p>Control how the PD channels open (flux-feedback) and their background turnover. All implemented via <code>Diffusion::ConductiveSimple</code> plus <code>Creation::OneWall</code>.</p>
+
+      <div class="param-grid">
+        <div class="param-card">
+          <div class="param-card-name">D_pd</div>
+          <div class="param-card-val">Current: <strong>0.05</strong> &nbsp;|&nbsp; Paper: ~0.8</div>
+          <div class="param-card-desc">Baseline PD diffusion rate (p&#x2080; in <code>ConductiveSimple</code>). Scales the D&#x1D62;&#x2C7C;&middot;(A&#x2C7C;&minus;A&#x1D62;) term in Eq. 1.</div>
+          <div class="param-card-effect">Higher D_pd makes PD diffusion the dominant transport mode (vs. PIN transport). For PIN canalization to dominate, keep D_pd smaller than T_pin.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">alpha_pd</div>
+          <div class="param-card-val">Current: <strong>0.02</strong> &nbsp;|&nbsp; Paper: ~1&times;10&sup2;</div>
+          <div class="param-card-desc">PD opening rate driven by local auxin flux squared (&alpha; in Eq. 2). Higher = stronger positive feedback, faster canalization.</div>
+          <div class="param-card-effect">This is the Mitchison Type 1 canalization parameter. Increase to get narrow PD tracks; too high causes runaway D&#x1D62;&#x2C7C; growth.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">gamma_over_alpha</div>
+          <div class="param-card-val">Current: <strong>2.5</strong> &nbsp;|&nbsp; Paper: &gamma;/&alpha; &asymp; 500</div>
+          <div class="param-card-desc">Ratio &gamma;/&alpha;, passed as p&#x2084; to <code>ConductiveSimple</code>. &gamma; is the PD closure/decay rate; &gamma;/&alpha; sets the steady-state D&#x1D62;&#x2C7C; ceiling.</div>
+          <div class="param-card-effect">Higher ratio &rarr; lower maximum D&#x1D62;&#x2C7C; at steady state. Raise if D&#x1D62;&#x2C7C; blows up; lower if PD tracks close too fast.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">beta_pd</div>
+          <div class="param-card-val">Current: <strong>0.01</strong> &nbsp;|&nbsp; Paper: ~3&times;10&minus;&sup2;</div>
+          <div class="param-card-desc">Constant background PD production rate on all walls (<code>Creation::OneWall</code>, &beta; in Eq. 2). Prevents D&#x1D62;&#x2C7C; from collapsing to zero off-track.</div>
+          <div class="param-card-effect">Small but nonzero value is important for stability. If PD completely disappears on non-track walls, increase beta_pd slightly.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PIN CYTOPLASMIC PARAMS ═══ -->
+    <section class="section" id="pin-params">
+      <h2 class="section-title">Parameters &mdash; Cytoplasmic PIN Pool (Eq. 3)</h2>
+
+      <div class="param-grid">
+        <div class="param-card">
+          <div class="param-card-name">pinpr</div>
+          <div class="param-card-val">Current: <strong>0.02</strong></div>
+          <div class="param-card-desc">Rate of cytoplasmic PIN synthesis, proportional to local auxin (pinpr&middot;A). Couples auxin levels to available PIN.</div>
+          <div class="param-card-effect">Higher pinpr &rarr; more PIN where auxin is high, amplifying asymmetric allocation. If P&#x1D62;&#x2C7C; isn't building up near the source, increase this.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">pindec</div>
+          <div class="param-card-val">Current: <strong>0.02</strong></div>
+          <div class="param-card-desc">First-order cytoplasmic PIN decay. Together with pinpr sets the steady-state cytoplasmic pool P* &asymp; pinpr&middot;A/pindec.</div>
+          <div class="param-card-effect">Keep pindec &le; pinpr so cells maintain a usable cytoplasmic PIN pool. If P collapses to near zero, lower pindec or raise pinpr.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ALLOCATION PARAMS ═══ -->
+    <section class="section" id="alloc-params">
+      <h2 class="section-title">Parameters &mdash; PIN Membrane Allocation (Eq. 4)</h2>
+      <p>These govern the UTG (up-the-gradient) and WTF (with-the-flux) terms that direct PIN to specific wall faces, driving canalization. All in <code>MembraneCycling::UTGWTF</code>.</p>
+
+      <div class="param-grid">
+        <div class="param-card">
+          <div class="param-card-name">k_U</div>
+          <div class="param-card-val">Current: <strong>0.05</strong> &nbsp;|&nbsp; Paper: ~4&times;10&minus;&sup3;</div>
+          <div class="param-card-desc">UTG term coefficient &mdash; allocates PIN to walls facing higher-auxin neighbors. The classic Mitchison Type 2 (up-the-gradient) mechanism.</div>
+          <div class="param-card-effect">Increase to strengthen up-gradient allocation. If PIN symmetry doesn't break, raise k_U first.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">k_off</div>
+          <div class="param-card-val">Current: <strong>0.02</strong></div>
+          <div class="param-card-desc">PIN dissociation rate from the membrane back to cytoplasm. Controls how quickly asymmetric allocation can re-equilibrate.</div>
+          <div class="param-card-effect">If PIN &ldquo;freezes&rdquo; in one direction too early, increase k_off to allow redistribution. Very low k_off can cause early locking before canalization.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">K_utg</div>
+          <div class="param-card-val">Current: <strong>2.0</strong> &nbsp;|&nbsp; Paper: 100</div>
+          <div class="param-card-desc">Half-saturation constant in the UTG auxin-sensing function g(x) = K&middot;x/(K+x). Scales the auxin sensitivity of the UTG mechanism.</div>
+          <div class="param-card-effect">Set relative to typical auxin levels. Paper uses K=100 (auxin in the tens range); our tissue has auxin ~0.5&ndash;3, so K=2 is appropriate. Increase K if UTG saturates immediately.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">k_Wq</div>
+          <div class="param-card-val">Current: <strong>0.5</strong> &nbsp;|&nbsp; Paper: ~1&times;10&minus;&sup5;</div>
+          <div class="param-card-desc">WTF quadratic term coefficient &mdash; allocates PIN to walls carrying higher PIN-flux squared. The self-reinforcing canalization mechanism.</div>
+          <div class="param-card-effect">This is the strongest canalization driver. Increase carefully &mdash; too high causes runaway PIN concentration. Start with k_Wl changes first.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">k_Wl</div>
+          <div class="param-card-val">Current: <strong>0.1</strong> &nbsp;|&nbsp; Paper: ~3&times;10&minus;&sup3;</div>
+          <div class="param-card-desc">WTF linear term coefficient &mdash; like k_Wq but linear in flux. Contributes to canalization with less potential for blow-up than the quadratic term.</div>
+          <div class="param-card-effect">Safer than k_Wq to increase. If you want stronger WTF, raise k_Wl before k_Wq.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-amber">
+        <strong>Note on paper vs. simulator scales:</strong> The paper's parameters (T=6, kU=4&times;10&minus;&sup3;, etc.) are calibrated to a full leaf geometry with auxin concentrations in the tens range. Our 4-ring semicircle with R_max=10 reaches auxin ~0.5&ndash;3. All parameters need to be re-scaled proportionally &mdash; the ratios between them matter more than absolute values.
+      </div>
+    </section>
+
+    <!-- ═══ GROWTH PARAMS ═══ -->
+    <section class="section" id="growth-params">
+      <h2 class="section-title">Parameters &mdash; Growth &amp; Division</h2>
+
+      <div class="param-grid">
+        <div class="param-card">
+          <div class="param-card-name">k_growth_radial</div>
+          <div class="param-card-val">Current: <strong>0.006</strong></div>
+          <div class="param-card-desc">Rate of vertex displacement outward from the center (<code>MoveVertexRadially</code>). Growth is exponential: fast-growing tissue divides often, slow tissue barely changes shape.</div>
+          <div class="param-card-effect">Raise for more rapid tissue expansion. At t=100 with current value, the tissue roughly doubles in area.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">k_growth_wall</div>
+          <div class="param-card-val">Current: <strong>0.048</strong></div>
+          <div class="param-card-desc">Wall stress-driven growth rate (<code>WallGrowth::Stress</code>). Walls stretched beyond rest length grow to relieve strain.</div>
+          <div class="param-card-effect">Increase for faster wall elongation. If cells become highly elongated without dividing, lower V_threshold or raise this.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">K_spring</div>
+          <div class="param-card-val">Current: <strong>0.01</strong></div>
+          <div class="param-card-desc">Wall spring stiffness (<code>VertexFromWallSpring</code>). Balances vertex positions along walls. Low value = soft tissue.</div>
+          <div class="param-card-effect">Increase if cell shapes become irregular or vertices drift unrealistically. Too high causes stiff oscillations.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">V_threshold</div>
+          <div class="param-card-val">Current: <strong>8.0</strong></div>
+          <div class="param-card-desc">Cell volume at which <code>Division::ShortestPath2D</code> triggers. Initial cell volume is 0.9; must grow ~9&times; before dividing.</div>
+          <div class="param-card-effect">Lower = more frequent division, more cells, slower simulation. Raise to reduce division events if the tissue grows too complex.</div>
+        </div>
+        <div class="param-card">
+          <div class="param-card-name">R_removal</div>
+          <div class="param-card-val">Current: <strong>500.0</strong></div>
+          <div class="param-card-desc">Cells whose center exceeds this radius are removed (<code>RemovalOutsideRadius</code>). Set large enough not to clip the tissue.</div>
+          <div class="param-card-effect">Only relevant if the tissue grows very large. With R_max=10 and t=100, the outer radius stays well below 500.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ RUNNING ═══ -->
+    <section class="section" id="running">
+      <h2 class="section-title">Building &amp; Running</h2>
+
+      <div class="subsection-title">Rebuild after any C++ change</div>
+<pre><code><span class="comment"># in WSL, from the tissue-simulator root</span>
+cd src
+make -j4</code></pre>
+
+      <div class="subsection-title">Regenerate model files &amp; run</div>
+<pre><code><span class="comment"># from the semicircle_leaf2 directory</span>
+python3 generate_tissue_files2.py          <span class="comment"># writes .init, .model, .solver</span>
+../../../bin/simulator semicircle_leaf2.model semicircle_leaf2.init semicircle_leaf2.solver</code></pre>
+
+      <div class="subsection-title">Save output before re-running</div>
+<pre><code><span class="comment"># copy the vtk folder to a named results snapshot</span>
+cp -r vtk results/my_experiment_name/
+<span class="comment"># save the generator too so you can reproduce it</span>
+cp generate_tissue_files2.py results/my_experiment_name/</code></pre>
+
+      <div class="subsection-title">Solver settings &mdash; <span class="file-ref">semicircle_leaf2.solver</span></div>
+<pre><code>RK5Adaptive
+0 100         <span class="comment"># start time, end time</span>
+2 100         <span class="comment"># output every 2 t-units, 100 total frames</span>
+0.5 1e-5      <span class="comment"># initial stepsize, tolerance</span></code></pre>
+      <p>To run longer, change <code>0 100</code> to <code>0 500</code> and adjust the output interval. To get more frames, lower the interval (e.g., <code>1 500</code> for 500 frames). Edit the <code>solver</code> string in <code>generate_tissue_files2.py</code>.</p>
+
+      <div class="callout callout-teal">
+        <strong>If the solver crashes with stepsize underflow:</strong> the RK5Adaptive solver has <code>tiny = 1e-6</code> (fixed in <span class="file-ref">src/rungeKutta.cc</span> line ~32) to prevent chasing floating-point noise on freshly created wall variables after division. If you still see underflow, try lowering <code>T_pin</code> or <code>k_Wq</code> first before touching solver tolerances.
+      </div>
+    </section>
+
+    <!-- ═══ PARAVIEW ═══ -->
+    <section class="section" id="paraview">
+      <h2 class="section-title">Visualizing in ParaView</h2>
+
+      <p>Open <code>vtk/tissue.pvd</code> in ParaView. Select the <strong>tissue.pvd</strong> pipeline object and choose what to color by in the toolbar dropdown.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>What you want to see</th><th>Variable to select</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Auxin gradient</td>
+              <td><code>cell variable 1</code></td>
+              <td>Cell vars are grouped: first 3 &rarr; &ldquo;cell vector&rdquo; (X=volume, Y=type, Z=Aprec); 4th is &ldquo;cell vector length&rdquo;; 5th = &ldquo;cell variable 1&rdquo;. So auxin (index 3) maps to &ldquo;cell variable 1&rdquo;.</td>
+            </tr>
+            <tr>
+              <td>Cytoplasmic PIN</td>
+              <td><code>cell variable 2</code></td>
+              <td>Index 4 in the model &rarr; &ldquo;cell variable 2&rdquo; in ParaView</td>
+            </tr>
+            <tr>
+              <td>Cell type</td>
+              <td><code>cell vector</code> Y-component</td>
+              <td>Type is cell var index 1, which lands in the Y slot of the &ldquo;cell vector&rdquo; group. Use &ldquo;Split Components&rdquo; in the display to isolate it.</td>
+            </tr>
+            <tr>
+              <td>PIN on walls (Pij)</td>
+              <td><code>wall variable 0</code></td>
+              <td>Wall vars start after the built-in length; index 1 (Pij) becomes &ldquo;wall variable 0&rdquo; in ParaView.</td>
+            </tr>
+            <tr>
+              <td>Plasmodesmata Dij</td>
+              <td><code>wall variable 2</code></td>
+              <td>Wall index 3 &rarr; &ldquo;wall variable 2&rdquo;. High values = open PD channels = canalized paths.</td>
+            </tr>
+            <tr>
+              <td>Saved flux</td>
+              <td><code>wall variable 4</code></td>
+              <td>Wall index 5 &rarr; &ldquo;wall variable 4&rdquo;. Nonzero where PIN transport is active in that direction.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-amber">
+        <strong>If ParaView shows fewer timesteps than expected:</strong> the simulator writes the <code>tissue.pvd</code> manifest up-front; if the run crashed early, the pvd lists phantom files. Reload (File &rarr; Reload Files) after trimming the pvd to match the actual number of <code>.vtu</code> files in the <code>vtk/</code> folder.
+      </div>
+    </section>
+
+    <!-- ═══ TUNING ═══ -->
+    <section class="section" id="tuning">
+      <h2 class="section-title">Tuning Tips</h2>
+
+      <div class="subsection-title">Signs that canalization is working</div>
+      <ul style="padding-left:20px; margin-bottom:16px; font-size:0.87rem; line-height:1.8;">
+        <li>Auxin shows a gradient from outer ring &rarr; base, not a uniform plateau.</li>
+        <li>Pij and Pji are asymmetric on walls along the source-to-sink axis.</li>
+        <li>Dij is higher on walls that carry sustained flux and lower off-track.</li>
+        <li>The auxin &ldquo;stripe&rdquo; narrows over time rather than broadening.</li>
+      </ul>
+
+      <div class="subsection-title">Common failure modes</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Symptom</th><th>Likely cause</th><th>Try</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Auxin high everywhere, no gradient</td>
+              <td>auxdec too small, auxdec_sink not large enough</td>
+              <td>Raise auxdec_sink to 0.3&ndash;0.5; lower auxpr slightly</td>
+            </tr>
+            <tr>
+              <td>Auxin never builds up</td>
+              <td>auxdec or auxdec_sink too large</td>
+              <td>Raise auxpr; check aprec_ramp is nonzero</td>
+            </tr>
+            <tr>
+              <td>PIN stays symmetric (no canalization)</td>
+              <td>k_U and k_Wl too small to break symmetry</td>
+              <td>Raise k_U to 0.1&ndash;0.2; try k_Wl = 0.5</td>
+            </tr>
+            <tr>
+              <td>Solver underflow crash</td>
+              <td>T_pin or k_Wq too large, creating rapid flux spikes</td>
+              <td>Halve T_pin or k_Wq; verify tiny=1e-6 in rungeKutta.cc</td>
+            </tr>
+            <tr>
+              <td>Dij collapses to zero everywhere</td>
+              <td>gamma_over_alpha too large or beta_pd too small</td>
+              <td>Lower gamma_over_alpha to 1.0; raise beta_pd to 0.05</td>
+            </tr>
+            <tr>
+              <td>Division explosions / many tiny cells</td>
+              <td>V_threshold too low relative to growth rate</td>
+              <td>Raise V_threshold to 12&ndash;16; lower k_growth_radial</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subsection-title">Scaling parameters toward paper values</div>
+      <p>The paper (larger leaf geometry, auxin in the tens) uses significantly different absolute values. Scale incrementally &mdash; change one parameter at a time, run to t=50, then check the auxin range in ParaView before proceeding.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Parameter</th><th>Current</th><th>Paper</th><th>Suggested intermediate</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>T_pin</code></td><td class="param-val">1.0</td><td class="param-val">6.0</td><td class="param-val">2.0 &rarr; 4.0</td></tr>
+            <tr><td><code>D_pd</code></td><td class="param-val">0.05</td><td class="param-val">0.8</td><td class="param-val">0.1 &rarr; 0.3</td></tr>
+            <tr><td><code>alpha_pd</code></td><td class="param-val">0.02</td><td class="param-val">1&times;10&minus;&sup4;</td><td class="param-val">0.005 (scale down with &alpha;/&phi;&sup2;)</td></tr>
+            <tr><td><code>k_U</code></td><td class="param-val">0.05</td><td class="param-val">4&times;10&minus;&sup3;</td><td class="param-val">0.02 &rarr; 0.1</td></tr>
+            <tr><td><code>k_Wl</code></td><td class="param-val">0.1</td><td class="param-val">3&times;10&minus;&sup3;</td><td class="param-val">0.05</td></tr>
+            <tr><td><code>k_Wq</code></td><td class="param-val">0.5</td><td class="param-val">1&times;10&minus;&sup5;</td><td class="param-val">approach last (most sensitive)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-green">
+        <strong>Recommendation:</strong> Save a copy of the <code>vtk/</code> output and the generator script to a named <code>results/</code> subfolder before each experiment so you can always roll back to a working state. Use the <code>params</code> dict at the top of <code>generate_tissue_files2.py</code> &mdash; it centralizes every tunable value in one place.
+      </div>
+    </section>
+
+    <!-- ═══ QUICK EDITS ═══ -->
+    <section class="section" id="quick-edits">
+      <h2 class="section-title">Customization — What to Change &amp; Where</h2>
+      <p>Everything lives in <span class="file-ref">generate_tissue_files2.py</span>. After any edit, regenerate and re-run:</p>
+
+<pre><code>python3 generate_tissue_files2.py
+../../src/VirtualLeaf semicircle_leaf2.init semicircle_leaf2.model semicircle_leaf2.solver</code></pre>
+
+      <!-- Tissue shape -->
+      <div class="subsection-title">Tissue shape &mdash; lines 105&ndash;108</div>
+<pre><code>createSemicircle(
+    nRings=<span class="num">4</span>,    <span class="comment"># radial cell layers (depth from sink to source)</span>
+    nCols=<span class="num">14</span>,   <span class="comment"># columns around the arc (width of tissue)</span>
+    ...
+)</code></pre>
+      <p>More rings = more cell layers between source and sink, longer canalization path. More columns = wider tissue, more cells per ring. Total cell count = nRings &times; nCols.</p>
+
+      <!-- Source / sink assignment -->
+      <div class="subsection-title">Which ring is source / sink &mdash; line 97</div>
+<pre><code>cellType = <span class="num">1</span> <span class="kw">if</span> r == nRings - <span class="num">1</span> <span class="kw">else</span> (<span class="num">2</span> <span class="kw">if</span> r == <span class="num">0</span> <span class="kw">else</span> <span class="num">0</span>)</code></pre>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Goal</th><th>Change to</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Flip source and sink (sink on outside)</td>
+              <td><code>1 if r == 0 else (2 if r == nRings-1 else 0)</code></td>
+            </tr>
+            <tr>
+              <td>Two outermost rings as source</td>
+              <td><code>1 if r >= nRings-2 else (2 if r == 0 else 0)</code></td>
+            </tr>
+            <tr>
+              <td>No sink (free drainage)</td>
+              <td><code>1 if r == nRings-1 else 0</code></td>
+            </tr>
+            <tr>
+              <td>Source on left half only (by column)</td>
+              <td>Add <code>and c &lt; nCols//2</code> to the outer-ring condition</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- params dict -->
+      <div class="subsection-title">All model parameters &mdash; lines 113&ndash;141</div>
+      <p>The <code>params</code> dict is the central knob panel. Change a value, save, re-run the generator &mdash; you never need to edit the model string below it directly.</p>
+
+<pre><code>params = {
+    <span class="comment"># ── Tissue growth ──────────────────────────────────────────</span>
+    <span class="str">"k_growth_radial"</span>: <span class="num">0.006</span>,  <span class="comment"># how fast vertices move outward</span>
+    <span class="str">"k_growth_wall"</span>:   <span class="num">0.048</span>,  <span class="comment"># how fast walls elongate under strain</span>
+    <span class="str">"K_spring"</span>:        <span class="num">0.01</span>,   <span class="comment"># wall spring stiffness</span>
+    <span class="str">"V_threshold"</span>:     <span class="num">8.0</span>,    <span class="comment"># cell volume that triggers division</span>
+    <span class="str">"R_removal"</span>:       <span class="num">500.0</span>,  <span class="comment"># cells past this radius are removed</span>
+
+    <span class="comment"># ── Auxin (Eq. 1) ──────────────────────────────────────────</span>
+    <span class="str">"aprec_ramp"</span>:      <span class="num">0.01</span>,   <span class="comment"># precursor buildup rate in source cells</span>
+    <span class="str">"auxpr"</span>:           <span class="num">0.05</span>,   <span class="comment"># precursor → auxin conversion rate</span>
+    <span class="str">"auxdec"</span>:          <span class="num">0.01</span>,   <span class="comment"># background auxin decay (all cells)</span>
+    <span class="str">"auxdec_sink"</span>:     <span class="num">0.1</span>,    <span class="comment"># extra decay at sink ring only</span>
+    <span class="str">"T_pin"</span>:           <span class="num">1.0</span>,    <span class="comment"># PIN transport permeability</span>
+
+    <span class="comment"># ── Plasmodesmata (Eq. 2) ──────────────────────────────────</span>
+    <span class="str">"D_pd"</span>:            <span class="num">0.05</span>,   <span class="comment"># baseline PD diffusion rate</span>
+    <span class="str">"alpha_pd"</span>:        <span class="num">0.02</span>,   <span class="comment"># PD opening feedback strength</span>
+    <span class="str">"gamma_over_alpha"</span>:<span class="num">2.5</span>,    <span class="comment"># PD closure rate ratio (sets max Dij)</span>
+    <span class="str">"beta_pd"</span>:         <span class="num">0.01</span>,   <span class="comment"># background PD production on all walls</span>
+
+    <span class="comment"># ── Cytoplasmic PIN (Eq. 3) ────────────────────────────────</span>
+    <span class="str">"pinpr"</span>:           <span class="num">0.02</span>,   <span class="comment"># PIN synthesis rate (proportional to auxin)</span>
+    <span class="str">"pindec"</span>:          <span class="num">0.02</span>,   <span class="comment"># PIN decay rate</span>
+
+    <span class="comment"># ── PIN membrane allocation (Eq. 4) ────────────────────────</span>
+    <span class="str">"k_U"</span>:             <span class="num">0.05</span>,   <span class="comment"># UTG: toward higher-auxin neighbor</span>
+    <span class="str">"k_off"</span>:           <span class="num">0.02</span>,   <span class="comment"># PIN detachment from membrane</span>
+    <span class="str">"K_utg"</span>:           <span class="num">2.0</span>,    <span class="comment"># auxin half-saturation for UTG sensing</span>
+    <span class="str">"k_Wq"</span>:            <span class="num">0.5</span>,    <span class="comment"># WTF quadratic: self-reinforces on flux²</span>
+    <span class="str">"k_Wl"</span>:            <span class="num">0.1</span>,    <span class="comment"># WTF linear: reinforces on flux</span>
+}</code></pre>
+
+      <!-- Simulation duration -->
+      <div class="subsection-title">Simulation duration &mdash; lines 242&ndash;247</div>
+<pre><code>solver = <span class="str">"""\
+RK5Adaptive
+0 100       </span><span class="comment"># start end  ← change 100 to run longer (e.g. 500)</span><span class="str">
+2 100       </span><span class="comment"># output_interval total_frames</span><span class="str">
+0.5 1e-5    </span><span class="comment"># initial_stepsize tolerance</span><span class="str">
+"""</span></code></pre>
+      <p>To get a longer run: change <code>0 100</code> &rarr; <code>0 500</code>. To get finer animation: lower the output interval from <code>2</code> to <code>1</code> (doubles the number of saved frames). These two numbers are independent of how many ODE steps the solver actually takes internally.</p>
+
+      <!-- Init values -->
+      <div class="subsection-title">Initial variable values &mdash; lines 73&ndash;78</div>
+<pre><code>Dij_init             = <span class="num">0.5</span>   <span class="comment"># starting PD aperture on every wall</span>
+volume_init          = <span class="num">0.9</span>   <span class="comment"># starting volume tracker (divides when > V_threshold)</span>
+Aprec_source_init    = <span class="num">0.5</span>   <span class="comment"># starting precursor in source cells</span>
+PIN_cytoplasmic_init = <span class="num">0.1</span>   <span class="comment"># starting cytoplasmic PIN in every cell</span></code></pre>
+      <p>These affect t=0 only. <code>Dij_init</code> must be nonzero or PD transport is inert from the start. Raising <code>Aprec_source_init</code> gives the source an earlier head-start.</p>
+
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

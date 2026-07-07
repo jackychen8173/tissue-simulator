@@ -103,40 +103,52 @@ def createSemicircle(nRings, nCols, outputName):
 
 
 createSemicircle(
-    nRings=4, nCols=14,
+    nRings=6, nCols=20,
     outputName="semicircle_leaf2.init"
 )
 
 
-# Reaction parameters (starting points; not yet tuned against the paper's
-# absolute units, which use a different geometry and scale).
+# Reaction parameters — stepped toward Holloway et al. (2025) paper values.
+# Key changes from previous run (4x14, t=100):
+#   - Tissue: 6 rings x 20 cols (120 cells, up from 56) for longer canal. path
+#   - T_pin: 1.0 -> 3.0  (paper: 6; stronger PIN-driven transport)
+#   - D_pd:  0.05 -> 0.15 (paper: 0.8; more PD diffusion while T still > D)
+#   - k_U:   0.05 -> 0.1  (paper: 4e-3 rescaled; stronger up-gradient)
+#   - k_Wl:  0.1  -> 0.2  (paper: 3e-3 rescaled; stronger with-the-flux)
+#   - k_Wq:  0.5  -> 0.15 (reduce — was destabilizing at high T)
+#   - k_off: 0.02 -> 0.05 (more PIN redistribution, less early locking)
+#   - pinpr: 0.02 -> 0.05 (more cytoplasmic PIN available where auxin is high)
+#   - gamma_over_alpha: 2.5 -> 5.0 (tighter Dij ceiling, narrower tracks)
+#   - beta_pd: 0.01 -> 0.02 (more background PD to keep off-track walls open)
+#   - V_threshold: 8.0 -> 6.0 (smaller initial cell area with 6 rings)
+#   - Run time: t=100 -> t=200
 params = {
     "k_growth_radial": 0.006,
     "k_growth_wall":   0.048,
     "K_spring":        0.01,
     "K_adh":           1.0,
     # Eq1: auxin
-    "auxpr":   0.05,   # production rate from Aprec
-    "auxdec":  0.01,   # background decay
-    "auxdec_sink": 0.1,  # extra decay at sink ring
-    "aprec_ramp":  0.01,  # precursor ramp rate in source cells
-    "T_pin":   1.0,    # PIN transport permeability
+    "auxpr":       0.05,   # production rate from Aprec
+    "auxdec":      0.01,   # background decay
+    "auxdec_sink": 0.15,   # extra decay at sink ring
+    "aprec_ramp":  0.02,   # precursor ramp rate in source cells
+    "T_pin":       3.0,    # PIN transport permeability (paper: 6)
     # Eq2: plasmodesmata (via DiffusionConductiveSimple, p3=0)
-    "D_pd":    0.05,   # PD passive diffusion rate (p_0)
-    "alpha_pd": 0.02,  # flux-feedback growth rate (p_1)
-    "gamma_over_alpha": 2.5,  # p_4 = gamma/alpha -> gamma = alpha*p_4
-    "beta_pd": 0.01,   # background PD production (Creation::OneWall)
+    "D_pd":            0.15,  # PD passive diffusion rate (paper: 0.8)
+    "alpha_pd":        0.02,  # flux-feedback growth rate
+    "gamma_over_alpha": 5.0,  # gamma/alpha ratio -> sets Dij ceiling
+    "beta_pd":         0.02,  # background PD production on all walls
     # Eq3: PIN cytoplasmic
-    "pinpr":   0.02,
-    "pindec":  0.02,
+    "pinpr":  0.05,
+    "pindec": 0.02,
     # Eq4: PIN allocation (UTG + WTF)
-    "k_U":     0.05,
-    "k_off":   0.02,
-    "K_utg":   2.0,
-    "k_Wq":    0.5,
-    "k_Wl":    0.1,
+    "k_U":   0.1,
+    "k_off": 0.05,
+    "K_utg": 2.0,
+    "k_Wq":  0.15,
+    "k_Wl":  0.2,
     # Division / removal
-    "V_threshold": 8.0,
+    "V_threshold": 6.0,
     "R_removal":   500.0,
 }
 
@@ -241,8 +253,8 @@ print("Written semicircle_leaf2.model")
 
 solver = """\
 RK5Adaptive
-0 100
-2 100
+0 112
+2 56
 0.5 1e-5
 """
 
