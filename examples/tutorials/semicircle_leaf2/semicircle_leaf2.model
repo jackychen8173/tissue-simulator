@@ -47,7 +47,7 @@ PINSaturatingTransport
 1
 5
 Diffusion::ConductiveSimple
-5 2 1 1
+5 2 1 2
 0.15
 0.02
 2
@@ -55,10 +55,12 @@ Diffusion::ConductiveSimple
 5.0
 3
 3
+4
 Creation::OneWall
-1 1 1
+1 1 2
 0.02
 3
+4
 Creation::One
 1 2 1 1
 0.05

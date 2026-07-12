@@ -781,10 +781,11 @@ namespace Creation {
 		<< "Uses one parameter k_cw (constant production rate)." << std::endl;
       exit(EXIT_FAILURE);
     }
-    if( indValue.size() != 1 || indValue[0].size() != 1 ) {
+    if( indValue.size() != 1 || (indValue[0].size() != 1 && indValue[0].size() != 2) ) {
       std::cerr << "Creation::OneWall::"
 		<< "OneWall() "
-		<< "Index for wall variable to be updated (produced) given." << std::endl;
+		<< "Index for wall variable to be updated (produced) given "
+		<< "(optional second index = symmetric mirror)." << std::endl;
       exit(EXIT_FAILURE);
     }
     //Set the variable values
@@ -814,6 +815,8 @@ namespace Creation {
     double k_cw = parameter(0);
     for (size_t k=0; k<numWalls; ++k) {
       wallDerivs[k][wIndex] += k_cw;
+      if (numVariableIndex(0) > 1)
+        wallDerivs[k][variableIndex(0,1)] += k_cw;
     }
   }
 

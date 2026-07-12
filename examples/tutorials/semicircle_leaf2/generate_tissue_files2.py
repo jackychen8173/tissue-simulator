@@ -202,7 +202,7 @@ PINSaturatingTransport
 1
 5
 Diffusion::ConductiveSimple
-5 2 1 1
+5 2 1 2
 {params['D_pd']}
 {params['alpha_pd']}
 2
@@ -210,10 +210,12 @@ Diffusion::ConductiveSimple
 {params['gamma_over_alpha']}
 3
 3
+4
 Creation::OneWall
-1 1 1
+1 1 2
 {params['beta_pd']}
 3
+4
 Creation::One
 1 2 1 1
 {params['pinpr']}

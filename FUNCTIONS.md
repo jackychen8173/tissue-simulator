@@ -195,6 +195,36 @@ Setting T=0 gives pure diffusion. Setting T high gives strong PIN-mediated canal
 
 ---
 
+## DiffusionConductiveSimple
+
+Passive diffusion between cells through a conductance variable that grows with flux (plasmodesmata dynamics).
+
+**Source:** [src/transport.h](src/transport.h) · [src/transport.cc](src/transport.cc) · factory: [src/baseReaction.cc](src/baseReaction.cc)
+
+**Note:** This is an existing VirtualLeaf class that was **modified** for this project to accept an optional second wall index (mirror slot).
+
+**What it does:**
+Two things at once:
+
+1. **Auxin diffusion** (Eq. 1 PD term): `dA_i/dt += D * Dij * (Aj − Ai)` — moves auxin between neighbours proportionally to the plasmodesmata conductance Dij.
+2. **PD area dynamics** (Eq. 2): `dDij/dt = α * |flux|^p2 / Dij^(p3+1) * Dij − γ/α * Dij * α` — Dij grows on walls that carry high flux (positive feedback) and decays otherwise, implementing canalization of PD channels.
+
+Each wall is processed once (`if i < neighbour`), so Dij is naturally symmetric.
+
+**Modified:** Now accepts 1 or 2 wall variable indices at level 1. When two indices are provided, the same conductance derivative is written to both the primary slot (Dij) and the mirror slot (Dij_mirror), keeping them equal. Backwards-compatible with single-index usage.
+
+**Parameters:**
+
+| Parameter | Value | What it controls |
+|---|---|---|
+| D | 0.15 | Baseline PD diffusion rate (multiplied by Dij) |
+| α (alpha_pd) | 0.02 | Rate at which flux widens PD pores |
+| p2 | 2 | Power of flux in feedback term (2 = flux-squared) |
+| p3 | 0 | Power in denominator (0 = disabled) |
+| γ/α (gamma_over_alpha) | 5.0 | Sets the steady-state Dij ceiling: Dij* ≈ flux^(p2/2) / sqrt(γ/α) |
+
+---
+
 ## MembraneCycling::CellUpTheGradientNonLinear
 
 Controls how PIN proteins move between the cell interior and the cell membrane (up-the-gradient version).
@@ -249,6 +279,120 @@ Acts as a boundary condition — any cell whose centre moves beyond the radius t
 | Parameter | Value | What it controls |
 |---|---|---|
 | R_threshold | 55.0 | Radius beyond which cells are removed |
+
+---
+
+---
+
+## NEW CLASSES — added for Holloway et al. 2025 implementation
+
+---
+
+## Creation::FromType
+
+Produces a molecule only in cells whose type variable matches a specified value.
+
+**Source:** [src/creation.h](src/creation.h) · [src/creation.cc](src/creation.cc) · factory: [src/baseReaction.cc](src/baseReaction.cc)
+
+**What it does:** Used to ramp up auxin precursor (Aprec) exclusively in the outer source ring. Cells with type=1 receive constant production; all other cells are unaffected.
+
+**Parameters:**
+
+| Parameter | Value | What it controls |
+|---|---|---|
+| k_c | 0.02 | Production rate in matching cells |
+| type_value | 1 | Which cell type receives production |
+
+---
+
+## Creation::OneWall
+
+Produces a molecule at a constant rate on every wall (not in cells).
+
+**Source:** [src/creation.h](src/creation.h) · [src/creation.cc](src/creation.cc) · factory: [src/baseReaction.cc](src/baseReaction.cc)
+
+**What it does:** Implements the background plasmodesmata (PD) production term β in Eq. 2. Every wall gains a small constant increment of Dij each step, preventing PD pores from closing completely on walls with no auxin flux.
+
+**Modified:** Now accepts an optional second wall variable index at level 0. When two indices are given, the same production rate is written to both slots — used to keep the Dij mirror slot (wall[4]) equal to the primary Dij slot (wall[3]).
+
+**Parameters:**
+
+| Parameter | Value | What it controls |
+|---|---|---|
+| k_cw | 0.02 | Background production rate on all walls |
+
+---
+
+## Degradation::FromType
+
+Decays a molecule at a higher rate in cells matching a specified type.
+
+**Source:** [src/degradation.h](src/degradation.h) · [src/degradation.cc](src/degradation.cc) · factory: [src/baseReaction.cc](src/baseReaction.cc)
+
+**What it does:** Implements the extra auxin sink at the base ring. Cells with type=2 (sink) get an additional fast decay on top of the background decay from `Degradation::One`, driving auxin to flow toward the base.
+
+**Parameters:**
+
+| Parameter | Value | What it controls |
+|---|---|---|
+| k_d | 0.15 | Extra decay rate in matching cells |
+| type_value | 2 | Which cell type gets extra decay (2 = sink/base ring) |
+
+---
+
+## PINSaturatingTransport
+
+Directional, Michaelis-Menten–saturating PIN-mediated auxin transport between cells.
+
+**Source:** [src/transport.h](src/transport.h) · [src/transport.cc](src/transport.cc) · factory: [src/baseReaction.cc](src/baseReaction.cc)
+
+**What it does biologically:**
+PIN proteins on cell walls pump auxin from one cell to its neighbour. The pumping rate saturates at high auxin concentrations (Michaelis-Menten kinetics), preventing runaway accumulation. For each shared wall:
+
+```
+dA_i/dt += T * [ Pji * Aj/(1+Aj) − Pij * Ai/(1+Ai) ]
+```
+
+Also saves the directional net flux magnitude into a wall variable pair so `MembraneCycling::UTGWTF` can use it for the WTF term.
+
+**Parameters:**
+
+| Parameter | Value | What it controls |
+|---|---|---|
+| T | 3.0 | PIN transport permeability (paper value: 6.0) |
+
+---
+
+## MembraneCycling::UTGWTF
+
+Combined Up-The-Gradient (UTG) and With-The-Flux (WTF) PIN membrane allocation rule (Eq. 4 of Holloway et al. 2025).
+
+**Source:** [src/membraneCycling.h](src/membraneCycling.h) · [src/membraneCycling.cc](src/membraneCycling.cc) · factory: [src/baseReaction.cc](src/baseReaction.cc)
+
+**What it does biologically:**
+Controls how PIN cycles between the cytoplasm and each membrane face. Two complementary mechanisms:
+
+- **UTG (Up The Gradient):** biases PIN insertion toward the neighbour with more auxin. Detects the local gradient — initiates canalization from a shallow auxin slope.
+- **WTF (With The Flux):** reinforces PIN on walls that already carry net flux. Detects flow — narrows and consolidates channels once started.
+- **Recycling (k_off):** removes PIN from membrane back to cytoplasm, allowing redistribution.
+
+```
+dPij/dt = k_U * Pi * f(Aj) / (1 + Pi)            [UTG]
+        + Pi / (1 + Pi) * (k_Wq * flux² + k_Wl * flux)  [WTF]
+        − k_off * Pij                              [recycling]
+```
+
+where `f(x) = K*x / (K + x)` and flux is the signed flux saved by `PINSaturatingTransport`.
+
+**Parameters:**
+
+| Parameter | Value | What it controls |
+|---|---|---|
+| k_U | 0.1 | UTG allocation rate — how strongly PIN follows the auxin gradient |
+| k_off | 0.05 | PIN recycling rate — how fast PIN returns from membrane to cytoplasm |
+| K | 2.0 | Half-saturation constant for the UTG auxin-sensing function |
+| k_Wq | 0.15 | WTF quadratic flux coefficient (flux² term — sharpens channel boundaries) |
+| k_Wl | 0.2 | WTF linear flux coefficient (flux¹ term — broader initial response) |
 
 ---
 

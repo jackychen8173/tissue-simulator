@@ -315,12 +315,13 @@ DiffusionConductiveSimple::
                   << "p_4 - conductivity \'degradation\' rate." << std::endl;
         exit(EXIT_FAILURE);
     }
-    if (indValue.size() != 2 || indValue[0].size() != 1 || indValue[1].size() != 1) {
+    if (indValue.size() != 2 || indValue[0].size() != 1 ||
+        (indValue[1].size() != 1 && indValue[1].size() != 2)) {
         std::cerr << "DiffusionConductiveSimple::"
                   << "DiffusionConductiveSimple() "
                   << "Two levels of variable indices used, "
                   << "first for diffusive cell variable, "
-                  << "second for wall conductivity variable" << std::endl;
+                  << "second for wall conductivity variable (optional second index = symmetric mirror)" << std::endl;
         exit(EXIT_FAILURE);
     }
     // Set the variable values
@@ -379,11 +380,11 @@ void DiffusionConductiveSimple::
                     // Update wall variables (conductance)
                     if (conductance > 0.0) {
                         flux = std::fabs(flux);
-                        wallDerivs[wallI][CI] += parameter(1) *
-                                                 ((std::pow(flux, parameter(2)) / std::pow(conductance, parameter(3) + 1)) - parameter(4)) * conductance;
-                        // std::cerr << wallI << " " << CI << " "
-                        //	      << wallData[wallI][CI] << " "
-                        //	      << wallDerivs[wallI][CI] << std::endl;
+                        double dC = parameter(1) *
+                                    ((std::pow(flux, parameter(2)) / std::pow(conductance, parameter(3) + 1)) - parameter(4)) * conductance;
+                        wallDerivs[wallI][CI] += dC;
+                        if (numVariableIndex(1) > 1)
+                            wallDerivs[wallI][variableIndex(1, 1)] += dC;
                     }
                 }
             }
