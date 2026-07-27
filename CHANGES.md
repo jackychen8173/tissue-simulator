@@ -202,7 +202,51 @@ After this fix, wall variable 1 in ParaView shows two equal components instead o
 
 ---
 
-## 5. Saved Simulation Results
+## 5. Five-Source Monocot Model (10×50, t=200)
+
+**File:** [examples/tutorials/semicircle_leaf2/generate_tissue_files2.py](examples/tutorials/semicircle_leaf2/generate_tissue_files2.py)
+
+### What changed from the single-source 6×20 run:
+
+| Setting | Old | New |
+|---|---|---|
+| Tissue size | `nRings=6, nCols=20` (120 cells) | `nRings=10, nCols=50` (500 cells) |
+| Sources | Single band, cols 7–12 (6 cells) | 5 clusters × 5 cols, evenly spaced |
+| Source columns | `SOURCE_COL_START/END` constants | `source_ranges()` — auto-computed |
+| Sink | Left + right edge columns | Base row (ring 0, all 50 columns) |
+| Run time | t = 112 | t = 200 |
+| Solver tolerance | 1e-5 | 1e-4 (handles larger tissue) |
+| Growth rate | k_growth_radial = 0.006 | 0.004 (stagger division waves) |
+
+### Source cluster positions (nCols=50)
+
+```
+col:  0    5    10   15   20   25   30   35   40   45   50
+      ....█████....█████....█████.....█████....█████....
+           4-8   13-17  22-26   32-36  41-45
+```
+
+Five 5-cell clusters with ~4-cell gaps between them (including at the ends).  
+`source_ranges(nCols)` recomputes positions automatically if `nCols` changes.
+
+### Why base-only sink
+
+With left/right edge-column sinks, the model funnels all auxin laterally toward the edges, biasing vein paths. With the sink at ring 0 (the flat leaf base), each of the 5 veins chooses its own exit column independently — the model decides where each vein goes.
+
+### Why more cells reduce grid bias
+
+With 120 cells and 20 columns, each cell wall is ~1/20th of the tissue width — PIN transport only has a few discrete angles available. At 500 cells and 50 columns, cell walls are ~2.5× narrower, allowing veins to run at shallower angles. Cell division further breaks up the initial grid, so by t=200 the tissue is no longer strongly axis-aligned.
+
+### Solver scaling
+
+`RK5Adaptive` slows during mass-division waves (many cells dividing simultaneously). Changes to reduce bog-down:
+- `k_growth_radial` 0.006 → 0.004: cells grow slower, divisions spread over more time steps
+- Tolerance 1e-5 → 1e-4: allows larger RK5 steps away from division events
+- If the simulation still stalls near a division wave, reduce `k_growth_radial` further (0.003) or add small random noise to initial `volume_init` values to stagger divisions across cells.
+
+---
+
+## 6. Saved Simulation Results
 
 ### `examples/tutorials/semicircle_leaf2/results/full_pinpd_model_t100_4x14/`
 Output from an early 4×14 tissue run to t=100. Useful as a before-division baseline.
