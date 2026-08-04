@@ -315,13 +315,17 @@ DiffusionConductiveSimple::
                   << "p_4 - conductivity \'degradation\' rate." << std::endl;
         exit(EXIT_FAILURE);
     }
-    if (indValue.size() != 2 || indValue[0].size() != 1 ||
-        (indValue[1].size() != 1 && indValue[1].size() != 2)) {
+    if ((indValue.size() != 2 && indValue.size() != 3) ||
+        indValue[0].size() != 1 ||
+        (indValue[1].size() != 1 && indValue[1].size() != 2) ||
+        (indValue.size() == 3 && indValue[2].size() != 2)) {
         std::cerr << "DiffusionConductiveSimple::"
                   << "DiffusionConductiveSimple() "
-                  << "Two levels of variable indices used, "
-                  << "first for diffusive cell variable, "
-                  << "second for wall conductivity variable (optional second index = symmetric mirror)" << std::endl;
+                  << "Two or three levels of variable indices used: "
+                  << "level 0 = diffusive cell variable, "
+                  << "level 1 = wall conductivity variable (optional second index = symmetric mirror), "
+                  << "level 2 (optional) = two flux wall variables (flux_ij, flux_ji) from PINSaturatingTransport "
+                  << "— enables total-flux feedback (PIN + PD) for the alpha*phi^2 term." << std::endl;
         exit(EXIT_FAILURE);
     }
     // Set the variable values
@@ -377,11 +381,15 @@ void DiffusionConductiveSimple::
                                   (cellData[i][cI] - cellData[neighIndex][cI]);
                     cellDerivs[i][cI] -= flux;
                     cellDerivs[neighIndex][cI] += flux;
-                    // Update wall variables (conductance)
+                    // Update wall conductance (Dij dynamics)
                     if (conductance > 0.0) {
-                        flux = std::fabs(flux);
+                        // Total phi = |PD diffusive flux| + saved PIN flux (flux_ij + flux_ji)
+                        // PIN flux slots provided at level 2 (optional); without them, only PD flux is used.
+                        double phi = std::fabs(flux);
+                        if (numVariableIndexLevel() >= 3 && numVariableIndex(2) == 2)
+                            phi += wallData[wallI][variableIndex(2, 0)] + wallData[wallI][variableIndex(2, 1)];
                         double dC = parameter(1) *
-                                    ((std::pow(flux, parameter(2)) / std::pow(conductance, parameter(3) + 1)) - parameter(4)) * conductance;
+                                    ((std::pow(phi, parameter(2)) / std::pow(conductance, parameter(3) + 1)) - parameter(4)) * conductance;
                         wallDerivs[wallI][CI] += dC;
                         if (numVariableIndex(1) > 1)
                             wallDerivs[wallI][variableIndex(1, 1)] += dC;

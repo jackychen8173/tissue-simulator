@@ -814,6 +814,9 @@ namespace Creation {
     size_t wIndex = variableIndex(0,0);
     double k_cw = parameter(0);
     for (size_t k=0; k<numWalls; ++k) {
+      // Skip boundary walls — PD pores only exist between two real cells
+      if (T.wall(k).cell1() == T.background() || T.wall(k).cell2() == T.background())
+        continue;
       wallDerivs[k][wIndex] += k_cw;
       if (numVariableIndex(0) > 1)
         wallDerivs[k][variableIndex(0,1)] += k_cw;

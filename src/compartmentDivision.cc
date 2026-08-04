@@ -2927,12 +2927,15 @@ void VolumeViaShortestPath::
 
 ShortestPath2D::ShortestPath2D(std::vector<double> &paraValue,
                                std::vector<std::vector<size_t> > &indValue) {
-    if (paraValue.size() != 4) {
+    if (paraValue.size() != 4 && paraValue.size() != 5) {
         std::cerr
             << "Division::ShortestPath2D::ShortestPath2D() "
             << "Four parameters are used V_threshold, Lwall_fraction, "
             << "Lwall_threshold, and CoM (1 = CoM, 0 = Random, "
 	    << "[0:1] weighted com-random position)."
+            << " Optional 5th parameter: cell-type variable index for source-type "
+            << "inheritance (outer daughter keeps type 1, inner becomes 0). "
+            << "Omit or set negative to disable."
             << std::endl;
         std::exit(EXIT_FAILURE);
     }
@@ -3042,11 +3045,42 @@ void ShortestPath2D::
         cellData[cell.index()][timeIndex] = 0.0;
     }
 
+    // Read parent cell type before division (used for type inheritance below).
+    // Enabled by optional 5th parameter = cell-type variable index.
+    double parentType = 0.0;
+    if (numParameter() >= 5 && parameter(4) >= 0.0)
+        parentType = cellData[cell.index()][static_cast<size_t>(parameter(4))];
+
+    size_t numWallTmp = wallData.size();
     T->divideCell(&cell, winner.wall1, winner.wall2, p, q, cellData, wallData,
                   vertexData, cellDerivs, wallDerivs, vertexDerivs,
                   variableIndex(0), parameter(2));
-    size_t numWallTmp = wallData.size();
     assert(numWallTmp + 3 == T->numWall());
+
+    // Source cell type inheritance: outer daughter keeps type 1 (source),
+    // inner daughter (closer to tissue centre) becomes type 0 (normal).
+    if (numParameter() >= 5 && parameter(4) >= 0.0 && parentType == 1.0) {
+        size_t typeIdx = static_cast<size_t>(parameter(4));
+        size_t iOrig   = cell.index();
+        size_t iSister = cellData.size() - 1;
+        // Compute squared radius of each daughter's centroid
+        auto r2 = [&](size_t ci) {
+            double cx = 0.0, cy = 0.0;
+            size_t nv = T->cell(ci).numVertex();
+            for (size_t v = 0; v < nv; ++v) {
+                size_t vi = T->cell(ci).vertex(v)->index();
+                cx += vertexData[vi][0];
+                cy += vertexData[vi][1];
+            }
+            cx /= nv; cy /= nv;
+            return cx * cx + cy * cy;
+        };
+        // The daughter with the smaller radius is the inner one → set to normal
+        if (r2(iOrig) < r2(iSister))
+            cellData[iOrig][typeIdx] = 0.0;
+        else
+            cellData[iSister][typeIdx] = 0.0;
+    }
 
     //(optional) Save sister cell sizes at division
     if (numVariableIndexLevel() == 2 && numVariableIndex(1) == 3) {
