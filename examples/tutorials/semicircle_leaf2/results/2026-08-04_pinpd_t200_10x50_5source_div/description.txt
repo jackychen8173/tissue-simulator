@@ -1,0 +1,20 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model with working growth and division
+Tissue: 10x50 semicircle, 500 -> 748 cells by t=200
+Run time: t=200
+T_pin: 3.0
+V_threshold: 1.5
+
+Critical bug fix: the division crash was caused by numWallTmp (used in the topology
+assertion after divideCell) being measured AFTER divideCell instead of BEFORE.
+This made the assertion 'numWallTmp + 3 == T->numWall()' always false, crashing
+every division attempt regardless of cell geometry. Moving numWallTmp to before
+the divideCell call fixed all crashes.
+
+With V_threshold=1.5 restored, cells divide at ~2.5x their initial size. The outer
+ring cells (ring 9) try to divide first but were excluded because they are boundary
+cells (elongated arc slices). Interior cells divide in waves roughly every 20 time
+units, growing the tissue from 500 to 748 cells by t=200. Dij still decays
+uniformly to 0.2 — strand formation still not achieved at T_pin=3.0.
+
+Changes from previous: Division assertion bug fixed. V_threshold=1.5. 
+500->748 cells. First run with actual cell divisions working.

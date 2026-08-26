@@ -1,0 +1,15 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model
+Tissue: 6x20 semicircle (120 cells, 6 rings x 20 columns)
+Run time: t=112
+T_pin: 3.0 (half of paper value 6.0)
+Source: Single cluster (5 cells wide) along the outer ring
+Sink: Left and right edge columns
+Cell variables: volume (0), type (1), Aprec (2), auxin A (3), cytoplasmic PIN P (4)
+Wall variables: rest length (0), Pij (1), Pji (2), Dij (3), Dij_mirror (4)
+
+First run with model file saved alongside results, making it fully reproducible.
+T_pin reduced to 3.0 from paper value; single localized source to test how a
+single vein initiates from a point source.
+
+Changes from previous: Model file now saved with results. T_pin=3.0.
+Single source replaces distributed source.

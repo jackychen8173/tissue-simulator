@@ -1,0 +1,13 @@
+﻿Model: Growth and division mechanics only — full PIN+PD canalization model NOT included
+Tissue: Semicircular leaf (exact dimensions unknown)
+Run time: t=100
+Reactions: MoveVertexRadially, WallGrowth::Stress, VertexFromWallSpring, Division::ShortestPath2D
+
+Isolated test of the growth and division system before integrating it with auxin
+dynamics. Vertices move radially outward at a uniform rate (MoveVertexRadially),
+walls grow irreversibly under stress (WallGrowth::Stress), and cells divide when
+they exceed a volume threshold (Division::ShortestPath2D). No auxin, PIN, or
+plasmodesmata reactions present. Goal was to confirm that the tissue grows and
+divides stably before adding chemical complexity.
+
+Changes from previous: First run with growth/division. No auxin model — purely mechanical.

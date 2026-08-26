@@ -1,0 +1,15 @@
+﻿Model: Holloway et al. 2025 — PD canalization only (PIN transport disabled)
+Tissue: 10x50 semicircle (500 cells)
+Run time: t=200
+T_pin: 0.0 (PIN transport completely off)
+Sources: 5 clusters along outer ring
+Sink: Base row
+
+Diagnostic run to isolate the PD (plasmodesmata) canalization dynamics from PIN
+transport. With T_pin=0, all auxin movement is by passive diffusion through PD
+only — no active PIN-driven transport. This removes the main flux signal (phi)
+that drives Dij strand formation, so Dij is expected to decay uniformly. Used to
+verify that the PD subsystem behaves correctly on its own and to establish a
+baseline for comparing against runs with PIN active.
+
+Changes from previous: T_pin set to 0.0. Everything else identical to fluxfix run.

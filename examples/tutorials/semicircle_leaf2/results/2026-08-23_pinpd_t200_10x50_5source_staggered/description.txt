@@ -1,0 +1,23 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model with staggered zone activation
+Tissue: 10x50 semicircle, 500 -> 748 cells by t=200
+Run time: t=200
+T_pin: 6.0
+V_threshold: 1.5
+k_growth_x: 0.002, k_growth_y: 0.006 (anisotropic)
+
+Staggered source zone activation (from Holloway & Wenzel 2021, section 2.3):
+  Z1 (center, cluster 2, cols 22-26):   Aprec = +0.5  → active at t=0    (midvein)
+  Z2 (flanking, clusters 1&3):          Aprec = -1.0  → active at t≈50   (1st secondary veins)
+  Z3 (outer, clusters 0&4):             Aprec = -2.0  → active at t≈100  (2nd secondary veins)
+  aprec_ramp = 0.02/tu; zone activates when Aprec crosses 0.
+
+Two code changes made for this run:
+1. Creation::One in creation.cc: clipped auxin production at max(Aprec, 0) so negative
+   Aprec acts as a developmental timer only (not an auxin sink).
+2. generate_tissue_files2.py: createSemicircle() accepts zone_aprec list; ZONE_APREC
+   constant controls per-cluster initial Aprec.
+
+Expected behavior: midvein (Z1) establishes first from center source, then flanking
+secondary veins activate at t=50, then outer secondaries at t=100. Veins should
+develop sequentially rather than all at once, matching the paper's developmental model.
+Compared to previous run (Tpin6), all other parameters identical.

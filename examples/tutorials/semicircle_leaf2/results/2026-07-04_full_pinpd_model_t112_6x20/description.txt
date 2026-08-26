@@ -1,0 +1,16 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model
+Tissue: 6x20 semicircle (120 cells, 6 rings x 20 columns)
+Run time: t=112
+T_pin: Unknown (model file not saved)
+Source: Single cluster along outer ring
+Sink: Edge columns (left and right sides)
+
+Scaled up from 4x14 to 6x20 for better spatial resolution. This is the run that
+first showed visible Dij strand formation — high-Dij walls forming a channel from
+the source down toward the sink, matching the canalization behavior described in
+the paper. The 6x20 tissue has outer cells that are nearly square in shape
+(arc width ~1.57, height ~1.67), which made division stable and allowed the
+simulation to run long enough for strands to develop.
+
+Changes from previous: Tissue enlarged from 56 to 120 cells. First confirmed
+observation of Dij vein-like strand formation.

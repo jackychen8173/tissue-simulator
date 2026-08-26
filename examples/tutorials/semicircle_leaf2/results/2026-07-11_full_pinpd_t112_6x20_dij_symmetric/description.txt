@@ -1,0 +1,13 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model
+Tissue: 6x20 semicircle (120 cells)
+Run time: t=112
+Source: Single cluster along outer ring
+Sink: Edge columns
+
+Same as full_pinpd_model_t112_6x20 but with Dij forced to be symmetric — both
+sides of each wall (Dij and its mirror) kept equal throughout. In the standard
+model, the two Dij values on a wall can in principle diverge. This run tests
+whether enforcing symmetry changes the pattern, or whether the strands still form.
+
+Changes from previous: Dij values on both sides of each wall are kept equal
+(symmetric PD pores).

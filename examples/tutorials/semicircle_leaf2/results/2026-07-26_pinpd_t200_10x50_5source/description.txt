@@ -1,0 +1,18 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model
+Tissue: 10x50 semicircle (500 cells, 10 rings x 50 columns)
+Run time: t=200
+T_pin: 3.0
+Sources: 5 evenly-spaced clusters (5 cells wide each) along outer ring
+         Positions: cols 4-8, 13-17, 22-26, 32-36, 41-45
+Sink: Base row (ring 0, all 50 columns)
+Growth: Disabled (no division)
+
+First large-tissue run designed to support 5 independent veins. Sink moved from
+edge columns to the entire base row so each vein can exit at its own column rather
+than being funnelled sideways. HOWEVER: the alpha*phi^2 flux feedback in the Dij
+equation was broken at this point — phi was computed from PD diffusion flux only,
+not from PIN transport flux. As a result, Dij decayed uniformly from 0.5 to 0.2
+everywhere with no strand formation.
+
+Changes from previous: Tissue scaled from 120 to 500 cells. 5 sources instead of 1.
+Sink moved to base row. T=200. Flux feedback bug present but not yet identified.

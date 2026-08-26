@@ -1,0 +1,10 @@
+﻿Model: Holloway et al. 2025 (Front. Plant Sci. 16:1621815) PIN+PD auxin canalization
+Tissue: Small semicircular leaf (exact dimensions unknown — model file not saved)
+Run time: Unknown
+T_pin: Paper value (T_pin = 6.0 from Holloway et al.)
+
+Baseline run using parameter values directly from the published paper. Used as the
+reference point for comparing the low/med/high transport sweeps. This is the
+intended operating regime of the model as calibrated by the authors.
+
+Changes from previous: Parameters set to published paper values rather than sweep variants.

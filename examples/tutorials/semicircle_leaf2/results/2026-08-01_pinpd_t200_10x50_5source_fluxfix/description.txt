@@ -1,0 +1,25 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model — flux feedback fixed
+Tissue: 10x50 semicircle (500 cells)
+Run time: t=200
+T_pin: 3.0
+Sources: 5 clusters (cols 4-8, 13-17, 22-26, 32-36, 41-45)
+Sink: Base row (all columns)
+Wall variables: added slots 5,6 for saved PIN flux (flux_ij, flux_ji)
+
+Key bug fix (professor point 4+5): The phi in the Dij canalization equation
+(alpha*phi^2 term) now correctly reads total auxin flux = |PD diffusion flux|
++ PIN transport flux (from wall slots 5 and 6). Previously phi only used PD
+diffusion, which was near zero at startup, so the feedback was inactive.
+
+Additional changes in this run:
+- Boundary walls initialized with Dij=0 (no PD pores on outer leaf surface)
+- Creation::OneWall skips boundary walls (no beta PD production there)
+- Source cell type inheritance after division: outer daughter stays type 1,
+  inner daughter becomes type 0 (normal)
+- DiffusionConductiveSimple updated to accept 3 index levels (added flux slots)
+
+Despite the fix, Dij still decayed uniformly to 0.2 because T_pin=3.0 did not
+generate PIN flux large enough (phi > 1.0) to overcome the gamma decay term.
+
+Changes from previous: Flux feedback bug fixed. Boundary Dij=0. Type inheritance.
+Wall variable count increased from 4 to 6.

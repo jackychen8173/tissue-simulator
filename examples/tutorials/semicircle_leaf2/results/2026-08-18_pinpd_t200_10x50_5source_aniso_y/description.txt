@@ -1,0 +1,17 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model with anisotropic growth
+Tissue: 10x50 semicircle, 500 -> 748 cells by t=200
+Run time: t=200
+T_pin: 3.0
+V_threshold: 1.5
+k_growth_x: 0.002 (lateral/x growth rate)
+k_growth_y: 0.006 (apical/y growth rate)
+
+Anisotropic growth implemented by replacing the single MoveVertexRadially reaction
+with two separate reactions: GrowthForce::X and GrowthForce::Y, each with its own
+rate. With k_y = 3x k_x, the tissue extends 3x faster in the vertical (apical)
+direction than sideways, producing a taller, narrower, pointier leaf shape compared
+to the isotropic runs. Division pattern and cell count are similar to the previous
+run (500->748 cells). Dij still shows uniform decay (same T_pin=3.0 issue).
+
+Changes from previous: Growth replaced from isotropic (single k) to anisotropic
+(separate k_x, k_y). Tissue shape is now elongated in y. Reaction count: 14->15.

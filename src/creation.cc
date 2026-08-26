@@ -136,8 +136,9 @@ namespace Creation {
     size_t xIndex = variableIndex(1,0);
     double k_c = parameter(0);
     //For each cell
-    for (size_t cellI = 0; cellI < numCells; ++cellI) {      
-      cellDerivs[cellI][cIndex] += k_c * cellData[cellI][xIndex];
+    for (size_t cellI = 0; cellI < numCells; ++cellI) {
+      // Clip at zero: Aprec < 0 is a developmental timer, not a sink
+      cellDerivs[cellI][cIndex] += k_c * std::max(cellData[cellI][xIndex], 0.0);
     }
   }
 

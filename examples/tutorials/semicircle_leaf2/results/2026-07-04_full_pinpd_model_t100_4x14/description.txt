@@ -1,0 +1,14 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model
+Tissue: 4x14 semicircle (56 cells, 4 rings x 14 columns)
+Run time: t=100
+T_pin: Unknown (model file not saved)
+Source: Single cluster (exact position unknown)
+Sink: Unknown configuration
+
+First run combining the full canalization model (auxin production/decay, PIN
+cytoplasmic dynamics, PIN membrane allocation via UTG+WTF, PD dynamics via
+DiffusionConductiveSimple) with the semicircular leaf geometry. Small tissue used
+to keep run times short while validating that all reactions work together.
+
+Changes from previous: Full PIN+PD model added to the growth-division framework.
+Tissue changed from growth-only to canalization-capable.

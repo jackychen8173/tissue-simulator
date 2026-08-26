@@ -1,0 +1,12 @@
+﻿Model: Holloway et al. 2025 (Front. Plant Sci. 16:1621815) PIN+PD auxin canalization
+Tissue: Small semicircular leaf (exact dimensions unknown — model file not saved)
+Run time: Unknown
+T_pin: Low (below paper value)
+
+One of four runs from this date that swept across different PIN transport strengths to
+see how the strength of active PIN-mediated auxin transport affects the canalization
+pattern. With low T_pin, PIN transport is weak and auxin moves mostly by passive
+diffusion. Expected result: little or no polarized PIN allocation, weak or absent
+vein-like Dij strands.
+
+Changes from previous: First transport-sweep run. No prior model in this series.

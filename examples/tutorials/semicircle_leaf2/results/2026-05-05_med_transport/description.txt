@@ -1,0 +1,11 @@
+﻿Model: Holloway et al. 2025 (Front. Plant Sci. 16:1621815) PIN+PD auxin canalization
+Tissue: Small semicircular leaf (exact dimensions unknown — model file not saved)
+Run time: Unknown
+T_pin: Medium (intermediate value between low and paper value)
+
+One of four runs sweeping PIN transport strength. At medium T_pin, PIN transport
+contributes meaningfully but is below the paper's calibrated value. May show partial
+canalization — some directional PIN polarity but weaker Dij strand formation than
+at full paper values.
+
+Changes from previous: T_pin increased from low_transport run.

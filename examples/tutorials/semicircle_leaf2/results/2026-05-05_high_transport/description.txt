@@ -1,0 +1,10 @@
+﻿Model: Holloway et al. 2025 (Front. Plant Sci. 16:1621815) PIN+PD auxin canalization
+Tissue: Small semicircular leaf (exact dimensions unknown — model file not saved)
+Run time: Unknown
+T_pin: High (above paper value)
+
+One of four runs sweeping PIN transport strength. At high T_pin, PIN transport
+dominates and auxin is strongly directed. May overshoot the canalization regime,
+producing very narrow or unstable strands.
+
+Changes from previous: T_pin increased above paper value.

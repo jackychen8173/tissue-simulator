@@ -1,0 +1,16 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model
+Tissue: 10x50 semicircle, 500 -> 748 cells by t=200
+Run time: t=200
+T_pin: 6.0 (restored to paper value; previously 3.0 in all 10x50 runs)
+V_threshold: 1.5
+k_growth_x: 0.002, k_growth_y: 0.006 (anisotropic, same as previous run)
+
+T_pin doubled from 3.0 to 6.0 to test whether stronger PIN transport generates
+enough auxin flux (phi > 1.0 on high-traffic walls) to drive Dij strand formation.
+The phi threshold for Dij to grow above the decay equilibrium of 0.2 is phi > 1.0
+(from alpha*phi^2 > beta, with alpha=0.02 and beta=0.02). At T_pin=3.0, walls
+never reached this threshold. Doubling T_pin doubles the PIN transport contribution
+to phi, making strand formation more likely. Check wall variable 2 (Dij) in
+ParaView to see if strands form from the 5 sources toward the base sink.
+
+Changes from previous: T_pin 3.0 -> 6.0. All other parameters identical.

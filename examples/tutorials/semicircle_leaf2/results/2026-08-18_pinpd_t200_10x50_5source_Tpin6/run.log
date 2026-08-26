@@ -1,0 +1,265 @@
+Reading model file semicircle_leaf2.model
+Reading model file:
+reactions...
+GrowthForce::X
+GrowthForce::Y
+WallGrowth::Stress
+WallMechanics::Spring
+CenterCOM
+Creation::FromType
+Creation::One
+Degradation::One
+Degradation::FromType
+PINSaturatingTransport
+DiffusionConductiveSimple
+Creation::OneWall
+Creation::One
+Degradation::One
+UTGWTF
+compartment changes...
+Division::ShortestPath2D
+RemovalOutsideRadius
+direction...
+Done
+
+Reading init file semicircle_leaf2.init
+Tissue::readInit(char*) - calling readInit(IN)
+Tissue::readInit(IN) - reading connectivity topology
+Tissue::readInit(IN) - reading vertex positions
+561(561) vertices in 2 dimensions.
+Tissue::readInit(IN) - reading wall data
+1060(1060) walls.
+Tissue::readInit(IN) - reading cell variables
+Tissue::sortCellWallAndCellVertex() 500 of 500 faces (cells) sorted recursively.
+Generating solver from file semicircle_leaf2.solver
+Initiating solver from tissue.
+Start simulation.
+0 0 500 1060 561 0 0  0 500 0 0 0.01
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+1 2.0202 500 1060 561 3058 4  2.0202 0 3058 4 8.11
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+2 4.0404 500 1060 561 4078 4  2.0202 0 1020 0 2.71
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+3 6.06061 500 1060 561 4760 4  2.0202 0 682 0 1.9
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+4 8.08081 500 1060 561 5272 4  2.0202 0 512 0 1.31
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+5 10.101 500 1060 561 5686 4  2.0202 0 414 0 1.06
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+6 12.1212 500 1060 561 6039 4  2.0202 0 353 0 0.9
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+7 14.1414 500 1060 561 6343 4  2.0202 0 304 0 0.78
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+8 16.1616 500 1060 561 6614 4  2.0202 0 271 0 0.71
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+9 18.1818 500 1060 561 6854 4  2.0202 0 240 0 0.61
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+10 20.202 500 1060 561 7063 4  2.0202 0 209 0 0.53
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+11 22.2222 500 1060 561 7253 4  2.0202 0 190 0 0.48
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+12 24.2424 500 1060 561 7429 4  2.0202 0 176 0 0.46
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+13 26.2626 500 1060 561 7589 4  2.0202 0 160 0 0.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+14 28.2828 500 1060 561 7735 4  2.0202 0 146 0 0.37
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+15 30.303 500 1060 561 7869 4  2.0202 0 134 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+16 32.3232 500 1060 561 7999 4  2.0202 0 130 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+17 34.3434 500 1060 561 8124 4  2.0202 0 125 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+18 36.3636 500 1060 561 8252 4  2.0202 0 128 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+19 38.3838 500 1060 561 8379 4  2.0202 0 127 0 0.32
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+20 40.404 500 1060 561 8508 4  2.0202 0 129 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+21 42.4242 500 1060 561 8639 4  2.0202 0 131 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+22 44.4444 500 1060 561 8772 4  2.0202 0 133 0 0.34
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+23 46.4646 500 1060 561 8901 4  2.0202 0 129 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+24 48.4848 500 1060 561 9029 4  2.0202 0 128 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+25 50.505 500 1060 561 9156 4  2.0202 0 127 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+26 52.5253 500 1060 561 9285 4  2.0202 0 129 0 0.34
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+27 54.5455 500 1060 561 9413 4  2.0202 0 128 0 0.32
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+28 56.5657 500 1060 561 9543 4  2.0202 0 130 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+29 58.5859 500 1060 561 9683 4  2.0202 0 140 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+30 60.6061 500 1060 561 9818 4  2.0202 0 135 0 0.34
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+31 62.6263 500 1060 561 9954 4  2.0202 0 136 0 0.36
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+32 64.6465 500 1060 561 10089 4  2.0202 0 135 0 0.34
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+33 66.6667 500 1060 561 10227 4  2.0202 0 138 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+34 68.6869 500 1060 561 10358 4  2.0202 0 131 0 0.34
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+35 70.7071 500 1060 561 10493 4  2.0202 0 135 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+36 72.7273 500 1060 561 10635 4  2.0202 0 142 0 0.36
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+37 74.7475 500 1060 561 10781 4  2.0202 0 146 0 0.39
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+38 76.7677 500 1060 561 10926 4  2.0202 0 145 0 0.37
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+39 78.7879 500 1060 561 11075 4  2.0202 0 149 0 0.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+40 80.8081 500 1060 561 11224 4  2.0202 0 149 0 0.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+41 82.8283 500 1060 561 11376 4  2.0202 0 152 0 0.39
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+42 84.8485 500 1060 561 11524 4  2.0202 0 148 0 0.38
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+43 86.8687 500 1060 561 11677 4  2.0202 0 153 0 0.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+44 88.8889 500 1060 561 11834 4  2.0202 0 157 0 0.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+45 90.9091 500 1060 561 11992 4  2.0202 0 158 0 0.42
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+46 92.9293 500 1060 561 12153 4  2.0202 0 161 0 0.41
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+47 94.9495 500 1060 561 12314 4  2.0202 0 161 0 0.41
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+48 96.9697 500 1060 561 12473 4  2.0202 0 159 0 0.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+49 98.9899 500 1060 561 12632 4  2.0202 0 159 0 0.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+50 101.01 500 1060 561 12794 4  2.0202 0 162 0 0.41
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+51 103.03 500 1060 561 12962 4  2.0202 0 168 0 0.42
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+52 105.051 500 1060 561 13134 4  2.0202 0 172 0 0.44
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+53 107.071 500 1060 561 13309 4  2.0202 0 175 0 0.45
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+54 109.091 500 1060 561 13494 4  2.0202 0 185 0 0.48
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+55 111.111 500 1060 561 13676 4  2.0202 0 182 0 0.46
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+56 113.131 500 1060 561 13865 4  2.0202 0 189 0 0.48
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+57 115.152 500 1060 561 14058 4  2.0202 0 193 0 0.5
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+58 117.172 500 1060 561 14252 4  2.0202 0 194 0 0.49
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+59 119.192 500 1060 561 14447 4  2.0202 0 195 0 0.51
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+60 121.212 500 1060 561 14656 4  2.0202 0 209 0 0.56
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+61 123.232 510 1090 581 36385 15  2.0202 10 21729 11 56.63
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+62 125.253 520 1120 601 58125 25  2.0202 10 21740 10 58.12
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+63 127.273 528 1144 617 76761 33  2.0202 8 18636 8 52.12
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 2 from 0.900583 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.946024 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.997868 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.950012 to 0.9
+64 129.293 548 1204 657 116538 53  2.0202 20 39777 20 114.28
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 1 from 0.998161 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.044828 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0414125 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0859242 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0827997 to 0.1
+65 131.313 594 1342 749 184628 97  2.0202 46 68090 44 213.15
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+66 133.333 594 1342 749 186042 97  2.0202 0 1414 0 4.87
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+67 135.354 596 1348 753 190930 100  2.0202 2 4888 3 16.34
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+68 137.374 596 1348 753 191687 100  2.0202 0 757 0 2.49
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+69 139.394 596 1348 753 192000 100  2.0202 0 313 0 1.08
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+70 141.414 596 1348 753 192296 100  2.0202 0 296 0 0.97
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+71 143.434 598 1354 757 197112 103  2.0202 2 4816 3 15.93
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 1 from 0.00119469 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0410246 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0386613 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0768873 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0793125 to 0.1
+72 145.455 640 1480 841 253294 140  2.0202 42 56182 37 197.49
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+73 147.475 644 1492 849 263297 144  2.0202 4 10003 4 38.75
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+74 149.495 644 1492 849 263871 144  2.0202 0 574 0 2.16
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+75 151.515 646 1498 853 268695 147  2.0202 2 4824 3 18.46
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+76 153.535 646 1498 853 269536 147  2.0202 0 841 0 3.69
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+77 155.556 648 1504 857 274517 150  2.0202 2 4981 3 20.67
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+78 157.576 648 1504 857 275283 150  2.0202 0 766 0 2.91
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+79 159.596 648 1504 857 275840 150  2.0202 0 557 0 2.1
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+80 161.616 648 1504 857 276432 150  2.0202 0 592 0 2.23
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 1 from 0.000471795 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0361484 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0370673 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0713682 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0723802 to 0.1
+81 163.636 692 1636 945 341713 189  2.0202 44 65281 39 278.69
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+82 165.657 694 1642 949 347589 192  2.0202 2 5876 3 26.64
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+83 167.677 694 1642 949 348360 192  2.0202 0 771 0 3.46
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+84 169.697 694 1642 949 349071 192  2.0202 0 711 0 3.09
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+85 171.717 696 1648 953 354405 195  2.0202 2 5334 3 24.95
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+86 173.737 696 1648 953 355116 195  2.0202 0 711 0 3.13
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+87 175.758 698 1654 957 360362 198  2.0202 2 5246 3 23.43
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+88 177.778 698 1654 957 361188 198  2.0202 0 826 0 3.69
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+89 179.798 698 1654 957 362003 198  2.0202 0 815 0 3.59
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+90 181.818 698 1654 957 363025 198  2.0202 0 1022 0 4.34
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 1 from 0.999946 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0328774 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0327584 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0645545 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0645323 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0952034 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0953243 to 0.1
+91 183.838 712 1696 985 394279 215  2.0202 14 31254 17 145.55
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+92 185.859 742 1786 1045 434526 242  2.0202 30 40247 27 189.52
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+93 187.879 744 1792 1049 439987 244  2.0202 2 5461 2 26.3
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+94 189.899 744 1792 1049 440521 244  2.0202 0 534 0 2.53
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+95 191.919 744 1792 1049 440922 244  2.0202 0 401 0 1.94
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+96 193.939 744 1792 1049 441292 244  2.0202 0 370 0 1.71
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+97 195.96 746 1798 1053 446722 247  2.0202 2 5430 3 27.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+98 197.98 746 1798 1053 448069 247  2.0202 0 1347 0 6.7
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+99 200 748 1804 1057 453627 250  2.0202 2 5558 3 27.39
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+100 200 748 1804 1057 453628 250  1e-06 0 1 0 0.02
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Simulation done.
