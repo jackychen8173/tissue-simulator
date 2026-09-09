@@ -1,0 +1,671 @@
+Reading model file semicircle_leaf2.model
+Reading model file:
+reactions...
+GrowthForce::X
+GrowthForce::Y
+WallGrowth::Stress
+WallMechanics::Spring
+CenterCOM
+Creation::FromType
+Creation::One
+Degradation::One
+Degradation::FromType
+PINSaturatingTransport
+DiffusionConductiveSimple
+Creation::OneWall
+Creation::One
+Degradation::One
+UTGWTF
+compartment changes...
+Division::ShortestPath2D
+RemovalOutsideRadius
+direction...
+Done
+
+Reading init file semicircle_leaf2.init
+Tissue::readInit(char*) - calling readInit(IN)
+Tissue::readInit(IN) - reading connectivity topology
+Tissue::readInit(IN) - reading vertex positions
+533(533) vertices in 2 dimensions.
+Tissue::readInit(IN) - reading wall data
+1012(1012) walls.
+Tissue::readInit(IN) - reading cell variables
+Tissue::sortCellWallAndCellVertex() 480 of 480 faces (cells) sorted recursively.
+Generating solver from file semicircle_leaf2.solver
+Initiating solver from tissue.
+Start simulation.
+0 0 480 1012 533 0 0  0 480 0 0 0
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+1 2.0202 480 1012 533 3003 4  2.0202 0 3003 4 7.49
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+2 4.0404 480 1012 533 3988 4  2.0202 0 985 0 2.4
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+3 6.06061 480 1012 533 4631 4  2.0202 0 643 0 1.58
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+4 8.08081 480 1012 533 5114 4  2.0202 0 483 0 1.17
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+5 10.101 480 1012 533 5500 4  2.0202 0 386 0 0.92
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+6 12.1212 480 1012 533 5820 4  2.0202 0 320 0 0.78
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+7 14.1414 480 1012 533 6103 4  2.0202 0 283 0 0.68
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+8 16.1616 480 1012 533 6340 4  2.0202 0 237 0 0.56
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+9 18.1818 480 1012 533 6555 4  2.0202 0 215 0 0.53
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+10 20.202 480 1012 533 6746 4  2.0202 0 191 0 0.47
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+11 22.2222 480 1012 533 6923 4  2.0202 0 177 0 0.44
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+12 24.2424 480 1012 533 7076 4  2.0202 0 153 0 0.42
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+13 26.2626 480 1012 533 7220 4  2.0202 0 144 0 0.36
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+14 28.2828 480 1012 533 7349 4  2.0202 0 129 0 0.32
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+15 30.303 480 1012 533 7470 4  2.0202 0 121 0 0.3
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+16 32.3232 480 1012 533 7582 4  2.0202 0 112 0 0.29
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+17 34.3434 480 1012 533 7690 4  2.0202 0 108 0 0.28
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+18 36.3636 480 1012 533 7790 4  2.0202 0 100 0 0.26
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+19 38.3838 480 1012 533 7889 4  2.0202 0 99 0 0.25
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+20 40.404 480 1012 533 7987 4  2.0202 0 98 0 0.24
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+21 42.4242 480 1012 533 8089 4  2.0202 0 102 0 0.27
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+22 44.4444 480 1012 533 8184 4  2.0202 0 95 0 0.24
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+23 46.4646 480 1012 533 8281 4  2.0202 0 97 0 0.24
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+24 48.4848 480 1012 533 8376 4  2.0202 0 95 0 0.24
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+25 50.505 480 1012 533 8468 4  2.0202 0 92 0 0.22
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+26 52.5253 480 1012 533 8555 4  2.0202 0 87 0 0.22
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+27 54.5455 480 1012 533 8648 4  2.0202 0 93 0 0.23
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+28 56.5657 480 1012 533 8762 4  2.0202 0 114 0 0.3
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+29 58.5859 480 1012 533 8884 4  2.0202 0 122 0 0.31
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+30 60.6061 480 1012 533 9010 4  2.0202 0 126 0 0.31
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+31 62.6263 480 1012 533 9141 4  2.0202 0 131 0 0.32
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+32 64.6465 480 1012 533 9273 4  2.0202 0 132 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+33 66.6667 480 1012 533 9399 4  2.0202 0 126 0 0.31
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+34 68.6869 480 1012 533 9531 4  2.0202 0 132 0 0.36
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+35 70.7071 480 1012 533 9669 4  2.0202 0 138 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+36 72.7273 480 1012 533 9811 4  2.0202 0 142 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+37 74.7475 480 1012 533 9952 4  2.0202 0 141 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+38 76.7677 480 1012 533 10094 4  2.0202 0 142 0 0.36
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+39 78.7879 480 1012 533 10234 4  2.0202 0 140 0 0.35
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+40 80.8081 480 1012 533 10369 4  2.0202 0 135 0 0.33
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1.54477e-14 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0047992 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.54376e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.57046e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.81599e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.14921e-15 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.57046e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.84411e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 2.57461e-15 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.57046e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.84408e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.81604e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.57046e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.84409e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.81604e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1.60141e-16 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.84409e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.81604e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.84409e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.57046e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.84409e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.57047e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.81605e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.84412e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.81605e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.57047e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.54373e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.81604e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.0047991 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479916 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.81611e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.57047e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479917 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.81609e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 5.8442e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00479921 to 0.1
+Tissue::divideCell() Moving vertex 2 from 5.81615e-09 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 1 from 1 to 0.9
+Tissue::divideCell() Moving vertex 1 from 1.06918e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1.06919e-08 to 0.1
+Tissue::divideCell() Moving vertex 1 from 7.48242e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 7.48242e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 1 from 1 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 2 from 6.9948e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 2 from 6.9948e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 2 from 7.02385e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 2 from 7.02385e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 2 from 6.9948e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 2 from 7.02385e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 2 from 7.01479e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 2 from 6.9948e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 2 from 7.00386e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 2 from 6.9948e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 2 from 6.9948e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 2 from 7.00386e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 2 from 7.00395e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 2 from 7.02505e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00479831 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479832 to 0.1
+Tissue::divideCell() Moving vertex 2 from 7.02307e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 2 from 7.24878e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995201 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479862 to 0.1
+Tissue::divideCell() Moving vertex 2 from 8.73203e-07 to 0.1
+Tissue::divideCell() Moving vertex 1 from 3.73647e-12 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995199 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 1 from 1 to 0.9
+Tissue::divideCell() Moving vertex 1 from 1.67943e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995199 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478954 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478954 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478954 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478955 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478955 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478954 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478955 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478955 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478954 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478955 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478955 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478954 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478954 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478954 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478966 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478956 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478957 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478978 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99521 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00478893 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995209 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479055 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995211 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999987 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995202 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00479757 to 0.1
+Tissue::divideCell() Moving vertex 2 from 1.25775e-05 to 0.1
+Tissue::divideCell() Moving vertex 1 from 1.10645e-08 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.00481083 to 0.1
+Tissue::divideCell() Moving vertex 1 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 1 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995189 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995189 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.00481211 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995191 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.999999 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00480158 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995182 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00481807 to 0.1
+Tissue::divideCell() Moving vertex 2 from 9.06583e-06 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.00475367 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995152 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00484793 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995246 to 0.9
+41 82.8283 860 2152 1293 63485 39  2.0202 380 53116 35 263.69
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 1 from 0.00464934 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464941 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464942 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464942 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.0046495 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.99535 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00465015 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.0046487 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995351 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00464341 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995344 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00465556 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995357 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00461002 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995303 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00469668 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.99539 to 0.9
+42 84.8485 932 2368 1437 77628 46  2.0202 72 14143 7 83.48
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 1 from 0.00432709 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995015 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00498546 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995673 to 0.9
+43 86.8687 936 2380 1445 82948 49  2.0202 4 5320 3 32.11
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+44 88.8889 936 2380 1445 83369 49  2.0202 0 421 0 2.73
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+45 90.9091 936 2380 1445 83630 49  2.0202 0 261 0 1.66
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 1 from 0.995102 to 0.9
+Tissue::divideCell() Moving vertex 2 from 7.51784e-07 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.999997 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995097 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995101 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.9951 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995101 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.995102 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995102 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995105 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.995051 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00495396 to 0.1
+Tissue::divideCell() Moving vertex 2 from 0.995157 to 0.9
+Tissue::divideCell() Moving vertex 2 from 0.00484308 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.994718 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.0052825 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.995507 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00449028 to 0.1
+46 92.9293 956 2440 1485 101010 61  2.0202 20 17380 12 107.43
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+47 94.9495 956 2440 1485 101741 61  2.0202 0 731 0 4.54
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Tissue::divideCell() Moving vertex 1 from 0.00206528 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.992655 to 0.9
+Tissue::divideCell() Moving vertex 1 from 0.00734474 to 0.1
+Tissue::divideCell() Moving vertex 1 from 0.997934 to 0.9
+48 96.9697 960 2452 1493 107007 64  2.0202 4 5266 3 33.06
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+49 98.9899 960 2452 1493 107460 64  2.0202 0 453 0 2.87
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+50 101.01 960 2452 1493 107748 64  2.0202 0 288 0 1.85
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+51 103.03 960 2452 1493 107973 64  2.0202 0 225 0 1.44
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+52 105.051 960 2452 1493 108164 64  2.0202 0 191 0 1.24
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+53 107.071 960 2452 1493 108343 64  2.0202 0 179 0 1.14
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+54 109.091 960 2452 1493 108518 64  2.0202 0 175 0 1.1
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+55 111.111 960 2452 1493 108693 64  2.0202 0 175 0 1.11
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+56 113.131 960 2452 1493 108867 64  2.0202 0 174 0 1.11
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+57 115.152 960 2452 1493 109038 64  2.0202 0 171 0 1.06
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+58 117.172 960 2452 1493 109207 64  2.0202 0 169 0 1.05
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+59 119.192 960 2452 1493 109372 64  2.0202 0 165 0 1.03
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+60 121.212 960 2452 1493 109528 64  2.0202 0 156 0 0.98
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+61 123.232 960 2452 1493 109683 64  2.0202 0 155 0 0.99
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+62 125.253 960 2452 1493 109841 64  2.0202 0 158 0 0.98
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+63 127.273 960 2452 1493 109997 64  2.0202 0 156 0 1
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+64 129.293 960 2452 1493 110153 64  2.0202 0 156 0 0.97
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+65 131.313 960 2452 1493 110308 64  2.0202 0 155 0 0.97
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+66 133.333 960 2452 1493 110457 64  2.0202 0 149 0 0.96
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+67 135.354 960 2452 1493 110600 64  2.0202 0 143 0 0.9
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+68 137.374 960 2452 1493 110740 64  2.0202 0 140 0 0.88
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+69 139.394 960 2452 1493 110878 64  2.0202 0 138 0 0.88
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+70 141.414 960 2452 1493 111018 64  2.0202 0 140 0 0.87
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+71 143.434 960 2452 1493 111160 64  2.0202 0 142 0 0.88
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+72 145.455 960 2452 1493 111293 64  2.0202 0 133 0 0.83
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+73 147.475 960 2452 1493 111423 64  2.0202 0 130 0 0.82
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+74 149.495 960 2452 1493 111557 64  2.0202 0 134 0 0.84
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+75 151.515 960 2452 1493 111688 64  2.0202 0 131 0 0.81
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+76 153.535 960 2452 1493 111814 64  2.0202 0 126 0 0.8
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+77 155.556 960 2452 1493 111942 64  2.0202 0 128 0 0.8
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+78 157.576 960 2452 1493 112068 64  2.0202 0 126 0 0.8
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+79 159.596 960 2452 1493 112195 64  2.0202 0 127 0 0.8
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+80 161.616 960 2452 1493 112324 64  2.0202 0 129 0 0.81
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+81 163.636 960 2452 1493 112456 64  2.0202 0 132 0 0.82
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+82 165.657 960 2452 1493 112585 64  2.0202 0 129 0 0.82
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+83 167.677 960 2452 1493 112714 64  2.0202 0 129 0 0.81
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+84 169.697 960 2452 1493 112846 64  2.0202 0 132 0 0.84
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+85 171.717 960 2452 1493 112978 64  2.0202 0 132 0 0.81
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+86 173.737 960 2452 1493 113110 64  2.0202 0 132 0 0.83
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+87 175.758 960 2452 1493 113244 64  2.0202 0 134 0 0.86
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+88 177.778 960 2452 1493 113380 64  2.0202 0 136 0 0.87
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+89 179.798 960 2452 1493 113517 64  2.0202 0 137 0 0.86
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+90 181.818 960 2452 1493 113654 64  2.0202 0 137 0 0.85
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+91 183.838 960 2452 1493 113792 64  2.0202 0 138 0 0.86
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+92 185.859 960 2452 1493 113933 64  2.0202 0 141 0 0.87
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+93 187.879 960 2452 1493 114077 64  2.0202 0 144 0 0.91
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+94 189.899 960 2452 1493 114227 64  2.0202 0 150 0 0.96
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+95 191.919 960 2452 1493 114371 64  2.0202 0 144 0 0.9
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+96 193.939 960 2452 1493 114520 64  2.0202 0 149 0 0.94
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+97 195.96 960 2452 1493 114673 64  2.0202 0 153 0 0.95
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+98 197.98 960 2452 1493 114837 64  2.0202 0 164 0 1.04
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+99 200 960 2452 1493 115001 64  2.0202 0 164 0 1.03
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+100 200 960 2452 1493 115002 64  1e-06 0 1 0 0.02
+BaseSolver::setTissueVariables() Setting 5 first cell variables.
+Simulation done.

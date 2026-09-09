@@ -1,0 +1,29 @@
+﻿Model: Holloway et al. 2025 full PIN+PD canalization model — rectangular corn-leaf geometry
+Tissue: 12 cols x 40 rows rectangle, 480 -> 960 cells by t=200
+Run time: t=200
+T_pin: 6.0
+V_threshold: 1.5
+k_growth_x: 0.001 (slow lateral, keeps blade narrow)
+k_growth_y: 0.004 (apical elongation)
+
+First rectangular (corn-leaf) tissue model. Replaces semicircular geometry with a
+12 x 40 rectangular grid of square cells (dx=dy=1.0). The tissue is centered at x=0,
+with y=0 at the base (sink) and y=40 at the tip (sources), approximating a corn leaf
+blade oriented base-to-tip.
+
+Key changes from previous run (2026-08-23 staggered semicircle):
+- Geometry: semicircle (10 rings x 50 cols) replaced by rectangle (40 rows x 12 cols)
+- SOURCE_WIDTH: 5 cells wide -> 1 cell wide (single-cell source zones, more corn-like)
+- Source positions: cols 1, 3, 6, 8, 10 across the 12-col tip row
+- k_growth_x: 0.002 -> 0.001 (narrower lateral growth)
+- k_growth_y: 0.006 -> 0.004 (moderate apical elongation)
+- Staggered zone activation unchanged: Z1 center (t=0), Z2 flanking (t~50), Z3 outer (t~100)
+
+Biological rationale: corn (maize) leaves are monocot blades with parallel venation.
+Veins run from the leaf tip (source zones) toward the base (vascular bundle / sink).
+The rectangular geometry produces straighter, more parallel potential vein paths than
+the semicircle. The narrow source zones (1 cell wide) reflect the thin vein initiation
+zones described in the 2021 paper for growing leaves.
+
+Result: tissue grew from 480 to 960 cells by t=200. Check wall variable 2 (Dij) in
+ParaView for parallel strand formation from tip sources toward base sink.
